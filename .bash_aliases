@@ -14,6 +14,8 @@ fi
 o() {
   if exists dolphin; then
     dolphin .
+  elif exists explorer.exe; then
+    explorer.exe .
   else
     open .
   fi
