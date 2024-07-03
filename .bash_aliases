@@ -3,6 +3,8 @@ exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
+alias {df-pull,dotfiles-pull}="git -C ~/dotfiles pull"
+
 if exists code; then
   alias {df,dotfiles}='code ~/dotfiles'
 else
