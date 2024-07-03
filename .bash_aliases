@@ -9,15 +9,12 @@ else
   alias {df,dotfiles}='nano ~/dotfiles/.bash_aliases'
 fi
 
-# if exists dolphin; then
-#   alias o='dolphin .'
-# fi
-
-# Op
+# Open current folder in file explorer
 # usage: o
-# usage: o ./README.md
 o() {
   if exists dolphin; then
     dolphin .
+  else
+    open .
   fi
 }
