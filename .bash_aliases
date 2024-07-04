@@ -4,9 +4,9 @@ exists() {
 }
 
 df() {
-  if [ "$1" == "pull" ]; then
+  if [ "$1" = "pull" ]; then
     git -C ~/dotfiles pull
-  elif [ "$1" == "open" ]; then
+  elif [ "$1" = "open" ]; then
     if exists code; then
       code ~/dotfiles
     else
