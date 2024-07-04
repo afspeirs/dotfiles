@@ -7,9 +7,10 @@ alias ip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '"'"'{print $2}'"'"
 
 # Functions
 
-# a function to help manage the code within this repo
-# usage: $ df [pull|open]
 function df() {
+  local NC='\033[0m' # No colour
+  local GREEN='\033[0;32m'
+
   if [ "$1" = "pull" ]; then
     git -C ~/dotfiles pull
   elif [ "$1" = "open" ]; then
@@ -19,48 +20,75 @@ function df() {
       nano ~/dotfiles/.bash_aliases
     fi
   else
-    echo "Usage: df [pull|open]"
-    echo "  $ df # show this help text"
-    echo "  $ df pull # pulls the latest changes from the repo"
-    echo "  $ df open # opens the dotfiles repo in vscode (if available)"
-    echo "            # or opens the .bash_aliases file in nano"
+    echo "Manage the dotfiles repo"
+    echo
+    echo "Usage:"
+    echo -e "  $ df      ${GREEN}# Show this help text${NC}"
+    echo -e "  $ df pull ${GREEN}# Pull the latest changes from the repo${NC}"
+    echo -e "  $ df open ${GREEN}# Open the dotfiles repo in vscode (if available)${NC}"
+    echo -e "            ${GREEN}# or open the .bash_aliases file in nano${NC}"
   fi
 }
 
-# run a commend for each sub folder
-# usage: $ eachFolder ls
 function eachFolder() {
-  ls -d */ | xargs -I {} bash -c "cd '{}' && $@"
-}
-
-# check if a command exists
-# link: https://stackoverflow.com/a/34143401
-# usage: $ exists code
-function exists() {
-  command -v "$1" >/dev/null 2>&1
-}
-
-# Open current folder in file explorer
-# usage: $ o
-function o() {
-  if exists dolphin; then
-    dolphin .
-  elif exists explorer.exe; then
-    explorer.exe .
+  if [ "$1" = "-h" ]; then
+    echo "Run a commend for each sub folder"
+    echo
+    echo "Usage:"
+    echo "  $ eachFolder ls"
   else
-    open .
+    ls -d */ | xargs -I {} bash -c "cd '{}' && $@"
   fi
 }
 
-# remove the quarantine flag on a file to allow the file to be used
-# usage: $ remove_quarantine ./node_modules.zip
-function remove_quarantine() {
-  xattr -d com.apple.quarantine "$1"
+function exists() {
+  if [ "$1" = "-h" ]; then
+    echo "Check if a command exists"
+    # echo "link: https://stackoverflow.com/a/34143401"
+    echo
+    echo "Usage:"
+    echo "  $ exists code"
+  else
+    command -v "$1" >/dev/null 2>&1
+  fi
 }
 
-# zip the contents of each folder within a directory
-# usage: $ zipper
+function o() {
+  if [ "$1" = "-h" ]; then
+    echo "Open the current folder in a new file explorer window"
+    echo
+    echo "Usage:"
+    echo "  $ o"
+  else
+    if exists dolphin; then
+      dolphin .
+    elif exists explorer.exe; then
+      explorer.exe .
+    else
+      open .
+    fi
+  fi
+}
+
+function remove_quarantine() {
+  if [ "$1" = "-h" ]; then
+    echo "Remove the quarantine flag on a file to allow the file to be used"
+    echo
+    echo "Usage:"
+    echo "  $ remove_quarantine ./node_modules.zip"
+  else
+    xattr -d com.apple.quarantine "$1"
+  fi
+}
+
 function zipper() {
-  rm -rf .//*.zip
-  for i in */; do (cd "$i"; zip -r "../${i%/}.zip" .); done
+  if [ "$1" = "-h" ]; then
+    echo "zip the contents of each folder within a directory"
+    echo
+    echo "Usage:"
+    echo "  $ zipper"
+  else
+    rm -rf .//*.zip
+    for i in */; do (cd "$i"; zip -r "../${i%/}.zip" .); done
+  fi
 }
