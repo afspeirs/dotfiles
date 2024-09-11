@@ -1,9 +1,10 @@
 # Aliases
 
 alias edit=nano
+
 alias delete_ds="find . -name '.DS_Store' -type f -delete"
-alias mysql_start="brew services start mysql"
 alias ip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '"'"'{print $2}'"'"
+alias mysql_start="brew services start mysql"
 
 # Functions
 
@@ -27,6 +28,12 @@ function df() {
     echo -e "  $ df pull ${GREEN}# Pull the latest changes from the repo${NC}"
     echo -e "  $ df open ${GREEN}# Open the dotfiles repo in vscode (if available)${NC}"
     echo -e "            ${GREEN}# or open the .bash_aliases file in nano${NC}"
+    echo ""
+    echo "Aliases:"
+    grep '^alias ' ~/.bash_aliases | grep -v 'alias edit' | awk -F'[ =]' '{print "  $ "$2}'
+    echo ""
+    echo -e "Functions:  ${GREEN}# For each of the below functions you can pass -h to show some help text${NC}"
+    grep '^function ' ~/.bash_aliases | grep -v 'function df' | grep -v 'function exists' | awk -F'[ () {]' '{print "  $ "$2}'
   fi
 }
 
