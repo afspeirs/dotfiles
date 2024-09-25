@@ -3,6 +3,7 @@
 alias edit=nano
 
 alias delete_ds="find . -name '.DS_Store' -type f -delete"
+alias gr="git reset --soft HEAD~1"
 alias ip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '"'"'{print $2}'"'"
 alias mysql_start="brew services start mysql"
 
@@ -58,6 +59,21 @@ function exists() {
   else
     command -v "$1" >/dev/null 2>&1
   fi
+}
+
+function loopFiles() {
+  filenames=(
+    "page-1.hbs"
+    "page-2.hbs"
+  )
+
+  # Loop over the array and create each file
+  for element in "${filenames[@]}"
+  do
+    mkdir "$element"
+    # touch "$element"
+    echo $element
+  done
 }
 
 function o() {
