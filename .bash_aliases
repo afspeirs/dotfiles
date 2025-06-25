@@ -105,6 +105,41 @@ function remove_quarantine() {
   fi
 }
 
+function yt() {
+  local url=""
+
+  if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
+    echo "Download YouTube audio (MP3) or video (MP4)."
+    echo
+    echo "Usage:"
+    echo "  yt <URL>                     # Downloads best video+audio (MP4) by default."
+    echo "  yt -l <URL>                  # Lists available formats."
+    echo "  yt -a <URL>                  # Downloads best audio (MP3)."
+    echo "  yt -v <URL>                  # Downloads best 1080p video+audio (MP4)."
+    return 0
+  fi
+
+  if ! command -v yt-dlp &> /dev/null; then
+    echo "Error: yt-dlp is not installed. Please install it."
+    return 1
+  fi
+
+  case "$1" in
+    -l)
+      yt-dlp -F "$2"
+      ;;
+    -a)
+      yt-dlp -x --audio-format mp3 --audio-quality 0 "$2"
+      ;;
+    -v)
+      yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" --merge-output-format mp4 --add-metadata "$2"
+      ;;
+    *)
+      yt-dlp -f bestvideo+bestaudio/best --merge-output-format mp4 --add-metadata "$1"
+      ;;
+  esac
+}
+
 function zipper() {
   if [ "$1" = "-h" ]; then
     echo "zip the contents of each folder within a directory"
