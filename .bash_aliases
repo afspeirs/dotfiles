@@ -3,6 +3,7 @@
 alias edit=nano
 
 alias delete_ds="find . -name '.DS_Store' -type f -delete"
+alias docker-prune="docker system prune -a --volumes"
 alias gb="git branch -r | grep -v '\->' | grep 'origin/' | sed 's/origin\///g'"
 alias gr="git reset --soft HEAD~1"
 alias ip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '"'"'{print $2}'"'"
@@ -11,52 +12,74 @@ alias mysql_start="brew services start mysql"
 # Functions
 
 function df() {
-  local NC='\033[0m' # No colour
-  local GREEN='\033[0;32m'
+  if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
+    cat <<EOF
+Manage the dotfiles repo
 
-  if [ "$1" = "pull" ]; then
-    git -C ~/dotfiles pull
-  elif [ "$1" = "open" ]; then
-    if exists code; then
-      code ~/dotfiles
-    else
-      nano ~/dotfiles/.bash_aliases
-    fi
-  else
-    echo "Manage the dotfiles repo"
-    echo
-    echo "Usage:"
-    echo -e "  $ df      ${GREEN}# Show this help text${NC}"
-    echo -e "  $ df pull ${GREEN}# Pull the latest changes from the repo${NC}"
-    echo -e "  $ df open ${GREEN}# Open the dotfiles repo in vscode (if available)${NC}"
-    echo -e "            ${GREEN}# or open the .bash_aliases file in nano${NC}"
-    echo ""
-    echo "Aliases:"
-    grep '^alias ' ~/.bash_aliases | grep -v 'alias edit' | awk -F'[ =]' '{print "  $ "$2}'
-    echo ""
-    echo -e "Functions:  ${GREEN}# For each of the below functions you can pass -h to show some help text${NC}"
-    grep '^function ' ~/.bash_aliases | grep -v 'function df' | grep -v 'function exists' | awk -F'[ () {]' '{print "  $ "$2}'
+Usage:
+  \$ df open            # Open the dotfiles repo in VS Code (if available) or open .bash_aliases in nano
+  \$ df pull            # Pull the latest changes from the repo
+  \$ df -h              # Show this help message
+  \$ df                 # Same as -h
+
+Aliases:
+$(grep '^alias ' ~/.bash_aliases | grep -v 'alias edit' | awk -F'[ =]' '{print "  \$ "$2}')
+
+Functions:      # Use -h with any function below to show help
+$(grep '^function ' ~/.bash_aliases | grep -v 'function df' | grep -v 'function exists' | awk -F'[ () {]' '{print "  \$ "$2}')
+EOF
+    return 0
   fi
+
+  case "$1" in
+    "open")
+      if exists code; then
+        code ~/dotfiles
+      else
+        nano ~/dotfiles/.bash_aliases
+      fi
+      ;;
+    "pull")
+      git -C ~/dotfiles pull
+      ;;
+    *)
+      echo "Unknown option: $1"
+      return 1
+      ;;
+  esac
 }
 
 function eachFolder() {
-  if [ "$1" = "-h" ]; then
-    echo "Run a commend for each sub folder"
-    echo
-    echo "Usage:"
-    echo "  $ eachFolder ls"
+  if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
+    cat <<EOF
+Run a command in each subfolder of the current directory.
+
+Usage:
+  \$ eachFolder <command>       # Run a command in each subfolder of the current directory.
+  \$ eachFolder -h              # Show this help message
+  \$ eachFolder                 # Same as -h
+
+Example:
+  eachFolder ls        # Lists contents of each subfolder
+EOF
   else
     ls -d */ | xargs -I {} bash -c "cd '{}' && $@"
   fi
 }
 
 function exists() {
-  if [ "$1" = "-h" ]; then
-    echo "Check if a command exists"
-    # echo "link: https://stackoverflow.com/a/34143401"
-    echo
-    echo "Usage:"
-    echo "  $ exists code"
+  if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
+    cat <<EOF
+Check if a command exists on the system.
+
+Usage:
+  \$ exists <command>       # Check if a command exists on the system
+  \$ exists -h              # Show this help message
+  \$ exists                 # Same as -h
+
+Example:
+  \$ exists code          # Checks if VS Code is installed
+EOF
   else
     command -v "$1" >/dev/null 2>&1
   fi
@@ -68,21 +91,27 @@ function loopFiles() {
     "page-2.hbs"
   )
 
-  # Loop over the array and create each file
-  for element in "${filenames[@]}"
-  do
+  # Loop over the array and create each folder
+  for element in "${filenames[@]}"; do
     mkdir "$element"
-    # touch "$element"
-    echo $element
+    echo "$element"
   done
 }
 
 function o() {
   if [ "$1" = "-h" ]; then
-    echo "Open the current folder in a new file explorer window"
-    echo
-    echo "Usage:"
-    echo "  $ o"
+    cat <<EOF
+Open the current folder in a file explorer window.
+
+Usage:
+  \$ o                 # Open the current folder in a file explorer window
+  \$ o -h              # Show this help message
+
+Automatically detects and uses:
+  - dolphin (Linux)
+  - explorer.exe (WSL/Windows)
+  - open (macOS)
+EOF
   else
     if exists dolphin; then
       dolphin .
@@ -95,11 +124,18 @@ function o() {
 }
 
 function remove_quarantine() {
-  if [ "$1" = "-h" ]; then
-    echo "Remove the quarantine flag on a file to allow the file to be used"
-    echo
-    echo "Usage:"
-    echo "  $ remove_quarantine ./node_modules.zip"
+  if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
+    cat <<EOF
+Remove the macOS quarantine flag from a file.
+
+Usage:
+  \$ remove_quarantine <file>          # Remove the quarantine flag from a file
+  \$ remove_quarantine -h              # Show this help message
+  \$ remove_quarantine                 # Same as -h
+
+Example:
+  \$ remove_quarantine ./node_modules.zip
+EOF
   else
     xattr -d com.apple.quarantine "$1"
   fi
@@ -109,13 +145,20 @@ function yt() {
   local url=""
 
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
-    echo "Download YouTube audio (MP3) or video (MP4)."
-    echo
-    echo "Usage:"
-    echo "  yt <URL>                     # Downloads best video+audio (MP4) by default."
-    echo "  yt -l <URL>                  # Lists available formats."
-    echo "  yt -a <URL>                  # Downloads best audio (MP3)."
-    echo "  yt -v <URL>                  # Downloads best 1080p video+audio (MP4)."
+    cat <<EOF
+Download YouTube audio (MP3) or video (MP4) using yt-dlp.
+
+Usage:
+  \$ yt <URL>           # Download best video+audio (MP4) [default]
+  \$ yt -l <URL>        # List available formats
+  \$ yt -a <URL>        # Download best audio only (MP3)
+  \$ yt -v <URL>        # Download best 1080p video+audio (MP4)
+  \$ yt -h              # Show this help message
+  \$ yt                 # Same as -h
+
+Requirements:
+  - yt-dlp must be installed and available in your PATH
+EOF
     return 0
   fi
 
@@ -141,13 +184,35 @@ function yt() {
 }
 
 function zipper() {
-  if [ "$1" = "-h" ]; then
-    echo "zip the contents of each folder within a directory"
-    echo
-    echo "Usage:"
-    echo "  $ zipper"
-  else
-    rm -rf .//*.zip
-    for i in */; do (cd "$i"; zip -r "../${i%/}.zip" .); done
+  if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
+    cat <<EOF
+Zip each folder or the contents of each folder within the current directory.
+
+Usage:
+  \$ zipper -c              # Zip the contents of each folder (excluding the folder)
+  \$ zipper -i              # Zip each folder (including the folder itself)
+  \$ zipper -h              # Show this help message
+  \$ zipper                 # Same as -h
+
+Notes:
+  - All .zip files in the current directory will be removed before zipping.
+  - Output files will be named after each folder (e.g., folder.zip).
+EOF
+    return 0
   fi
+
+  rm -f ./*.zip
+
+  case "$1" in
+    -c)
+      for i in */; do (cd "$i"; zip -r "../${i%/}.zip" .); done
+      ;;
+    -i)
+      for i in */; do zip -r "${i%/}.zip" "$i"; done
+      ;;
+    *)
+      echo "Unknown option: $1"
+      return 1
+      ;;
+  esac
 }
