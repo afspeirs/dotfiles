@@ -9,15 +9,17 @@ Ensure you have the following installed on your system:
 ### Git
 
 ```bash
-sudo apt install git
-sudo zypper install git
+sudo apt install git # Ubuntu
+sudo dnf install git # Fedora
+sudo zypper install git # openSUSE
 ```
 
 ### Stow
 
 ```bash
-sudo apt install stow
-sudo zypper install stow
+sudo apt install stow # Ubuntu
+sudo dnf install stow # Fedora
+sudo zypper install stow # openSUSE
 ```
 
 ## Installation
