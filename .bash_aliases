@@ -55,17 +55,27 @@ function eachFolder() {
 Run a command in each subfolder of the current directory.
 
 Usage:
-  \$ eachFolder <command>       # Run a command in each subfolder of the current directory.
-  \$ eachFolder -h              # Show this help message
-  \$ eachFolder                 # Same as -h
+  \$ eachFolder <command> [args...]   # Run a command in each subfolder
+  \$ eachFolder -h                    # Show this help message
+  \$ eachFolder                       # Same as -h
 
 Example:
-  eachFolder ls        # Lists contents of each subfolder
+  \$ eachFolder ls -la       # Lists contents of each subfolder in long format
+
+Notes:
+  - Only directories in the current folder are targeted.
+  - Commands are run from within each subfolder.
 EOF
-  else
-    ls -d */ | xargs -I {} bash -c "cd '{}' && $@"
+    return 0
   fi
+
+  for dir in */; do
+    [ -d "$dir" ] || continue
+    echo "Running in: $dir"
+    (cd "$dir" && "$@")
+  done
 }
+
 
 function exists() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
