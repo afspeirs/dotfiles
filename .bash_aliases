@@ -221,8 +221,6 @@ EOF
 }
 
 function yt() {
-  local url=""
-
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
     cat <<EOF
 Download YouTube audio (MP3) or video (MP4) using yt-dlp.
@@ -235,29 +233,37 @@ Usage:
   \$ yt -h              # Show this help message
   \$ yt                 # Same as -h
 
+Examples:
+  \$ yt https://youtu.be/dQw4w9WgXcQ
+  \$ yt -a https://youtu.be/dQw4w9WgXcQ
+  \$ yt -l https://youtu.be/dQw4w9WgXcQ
+
 Requirements:
   - yt-dlp must be installed and available in your PATH
 EOF
     return 0
   fi
 
-  if ! command -v yt-dlp &> /dev/null; then
+  if ! command -v yt-dlp >/dev/null 2>&1; then
     echo "Error: yt-dlp is not installed. Please install it."
     return 1
   fi
 
   case "$1" in
     "-l")
-      yt-dlp -F "$2"
+      shift
+      yt-dlp -F "$@"
       ;;
     "-a")
-      yt-dlp -x --audio-format mp3 --audio-quality 0 "$2"
+      shift
+      yt-dlp -x --audio-format mp3 --audio-quality 0 "$@"
       ;;
     "-v")
-      yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" --merge-output-format mp4 --add-metadata "$2"
+      shift
+      yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" --merge-output-format mp4 --add-metadata "$@"
       ;;
     "*")
-      yt-dlp -f bestvideo+bestaudio/best --merge-output-format mp4 --add-metadata "$1"
+      yt-dlp -f bestvideo+bestaudio/best --merge-output-format mp4 --add-metadata "$@"
       ;;
   esac
 }
