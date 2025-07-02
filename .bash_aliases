@@ -14,19 +14,19 @@ alias mysql_start="brew services start mysql"
 function df() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
     cat <<EOF
-Manage the dotfiles repo
+Manage the dotfiles repository.
 
 Usage:
-  \$ df open            # Open the dotfiles repo in VS Code (if available) or open .bash_aliases in nano
-  \$ df pull            # Pull the latest changes from the repo
+  \$ df open            # Open the dotfiles repo in VS Code (if available) or .bash_aliases in nano
+  \$ df pull            # Pull the latest changes from the dotfiles repo
   \$ df -h              # Show this help message
   \$ df                 # Same as -h
 
 Aliases:
-$(grep '^alias ' ~/.bash_aliases | grep -v 'alias edit' | awk -F'[ =]' '{print "  \$ "$2}')
+$(grep '^alias ' ~/dotfiles/.bash_aliases 2>/dev/null | grep -v 'alias edit' | awk -F'[ =]' '{print "  \$ "$2}')
 
 Functions:      # Use -h with any function below to show help
-$(grep '^function ' ~/.bash_aliases | grep -v 'function df' | grep -v 'function exists' | awk -F'[ () {]' '{print "  \$ "$2}')
+$(grep '^function ' ~/dotfiles/.bash_aliases 2>/dev/null | grep -v 'function df' | grep -v 'function exists' | awk -F'[ (){]' '{print "  \$ "$2}')
 EOF
     return 0
   fi
@@ -44,6 +44,7 @@ EOF
       ;;
     *)
       echo "Unknown option: $1"
+      echo "Run 'df -h' for usage."
       return 1
       ;;
   esac
@@ -152,28 +153,38 @@ function loopFiles() {
   done
 }
 
-function o() {
+o() {
   if [ "$1" = "-h" ]; then
     cat <<EOF
-Open the current folder in a file explorer window.
+Open a folder in the system's file explorer.
 
 Usage:
-  \$ o                 # Open the current folder in a file explorer window
+  \$ o [path]          # Open the specified folder (or current folder if none given)
   \$ o -h              # Show this help message
 
 Automatically detects and uses:
   - dolphin (Linux)
   - explorer.exe (WSL/Windows)
   - open (macOS)
+
+Examples:
+  \$ o                  # Opens the current directory
+  \$ o ~/Downloads      # Opens the Downloads folder
 EOF
+    return 0
+  fi
+
+  target="${1:-.}"
+
+  if exists dolphin; then
+    dolphin "$target"
+  elif exists explorer.exe; then
+    explorer.exe "$target"
+  elif exists open; then
+    open "$target"
   else
-    if exists dolphin; then
-      dolphin .
-    elif exists explorer.exe; then
-      explorer.exe .
-    else
-      open .
-    fi
+    echo "No supported file explorer found. Please open '$target' manually."
+    return 1
   fi
 }
 
@@ -222,16 +233,16 @@ EOF
   fi
 
   case "$1" in
-    -l)
+    "-l")
       yt-dlp -F "$2"
       ;;
-    -a)
+    "-a")
       yt-dlp -x --audio-format mp3 --audio-quality 0 "$2"
       ;;
-    -v)
+    "-v")
       yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" --merge-output-format mp4 --add-metadata "$2"
       ;;
-    *)
+    "*")
       yt-dlp -f bestvideo+bestaudio/best --merge-output-format mp4 --add-metadata "$1"
       ;;
   esac
