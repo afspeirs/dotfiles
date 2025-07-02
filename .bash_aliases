@@ -78,10 +78,22 @@ Usage:
   \$ exists                 # Same as -h
 
 Example:
-  \$ exists code          # Checks if VS Code is installed
+  \$ exists code
+  \$ exists code && echo "VS Code is installed"
+  \$ exists git || echo "Git is not installed"
+
+
+Returns:
+  - Exit code 0 if the command exists
+  - Exit code 1 if the command does not exist
 EOF
+    return 0
+  fi
+
+  if command -v "$1" >/dev/null 2>&1; then
+    return 0
   else
-    command -v "$1" >/dev/null 2>&1
+    return 1
   fi
 }
 
