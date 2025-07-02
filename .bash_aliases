@@ -274,7 +274,7 @@ function zipper() {
 Zip each folder or the contents of each folder within the current directory.
 
 Usage:
-  \$ zipper -c              # Zip the contents of each folder (excluding the folder)
+  \$ zipper -c              # Zip the contents of each folder (excluding the folder itself)
   \$ zipper -i              # Zip each folder (including the folder itself)
   \$ zipper -h              # Show this help message
   \$ zipper                 # Same as -h
@@ -282,21 +282,35 @@ Usage:
 Notes:
   - All .zip files in the current directory will be removed before zipping.
   - Output files will be named after each folder (e.g., folder.zip).
+  - Only top-level directories are processed.
 EOF
     return 0
   fi
 
-  rm -f ./*.zip
+  # Confirm before deleting existing zip files
+  if compgen -G "*.zip" > /dev/null; then
+    echo "Removing existing .zip files in the current directory..."
+    rm -f ./*.zip
+  fi
 
   case "$1" in
-    -c)
-      for i in */; do (cd "$i"; zip -r "../${i%/}.zip" .); done
+    "-c")
+      for dir in */; do
+        [ -d "$dir" ] || continue
+        echo "Zipping contents of: $dir"
+        (cd "$dir" && zip -r "../${dir%/}.zip" .)
+      done
       ;;
-    -i)
-      for i in */; do zip -r "${i%/}.zip" "$i"; done
+    "-i")
+      for dir in */; do
+        [ -d "$dir" ] || continue
+        echo "Zipping folder: $dir"
+        zip -r "${dir%/}.zip" "$dir"
+      done
       ;;
-    *)
+    "*")
       echo "Unknown option: $1"
+      echo "Run 'zipper -h' for usage."
       return 1
       ;;
   esac
