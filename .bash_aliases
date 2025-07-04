@@ -153,7 +153,7 @@ function loopFiles() {
   done
 }
 
-o() {
+function o() {
   if [ "$1" = "-h" ]; then
     cat <<EOF
 Open a folder in the system's file explorer.
@@ -177,7 +177,7 @@ EOF
   target="${1:-.}"
 
   if exists dolphin; then
-    dolphin "$target"
+    dolphin "$target" > /dev/null 2>&1 &
   elif exists explorer.exe; then
     explorer.exe "$target"
   elif exists open; then
