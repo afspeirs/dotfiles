@@ -17,16 +17,16 @@ function df() {
 Manage the dotfiles repository.
 
 Usage:
-  \$ df open            # Open the dotfiles repo in VS Code (if available) or .bash_aliases in nano
-  \$ df pull            # Pull the latest changes from the dotfiles repo
-  \$ df -h              # Show this help message
-  \$ df                 # Same as -h
+  $ df open            # Open the dotfiles repo in VS Code (if available) or .bash_aliases in nano
+  $ df pull            # Pull the latest changes from the dotfiles repo
+  $ df -h              # Show this help message
+  $ df                 # Same as -h
 
 Aliases:
-$(grep '^alias ' ~/dotfiles/.bash_aliases 2>/dev/null | grep -v 'alias edit' | awk -F'[ =]' '{print "  \$ "$2}')
+$(grep '^alias ' ~/dotfiles/.bash_aliases 2>/dev/null | grep -v 'alias edit' | awk -F'[ =]' '{print "  $ "$2}')
 
 Functions:      # Use -h with any function below to show help
-$(grep '^function ' ~/dotfiles/.bash_aliases 2>/dev/null | grep -v 'function df' | grep -v 'function exists' | awk -F'[ (){]' '{print "  \$ "$2}')
+$(grep '^function ' ~/dotfiles/.bash_aliases 2>/dev/null | grep -v 'function df' | grep -v 'function exists' | awk -F'[ (){]' '{print "  $ "$2}')
 EOF
     return 0
   fi
@@ -56,12 +56,12 @@ function eachFolder() {
 Run a command in each subfolder of the current directory.
 
 Usage:
-  \$ eachFolder <command> [args...]   # Run a command in each subfolder
-  \$ eachFolder -h                    # Show this help message
-  \$ eachFolder                       # Same as -h
+  $ eachFolder <command> [args...]   # Run a command in each subfolder
+  $ eachFolder -h                    # Show this help message
+  $ eachFolder                       # Same as -h
 
 Example:
-  \$ eachFolder ls -la       # Lists contents of each subfolder in long format
+  $ eachFolder ls -la       # Lists contents of each subfolder in long format
 
 Notes:
   - Only directories in the current folder are targeted.
@@ -84,14 +84,14 @@ function exists() {
 Check if a command exists on the system.
 
 Usage:
-  \$ exists <command>       # Check if a command exists on the system
-  \$ exists -h              # Show this help message
-  \$ exists                 # Same as -h
+  $ exists <command>       # Check if a command exists on the system
+  $ exists -h              # Show this help message
+  $ exists                 # Same as -h
 
 Example:
-  \$ exists code
-  \$ exists code && echo "VS Code is installed"
-  \$ exists git || echo "Git is not installed"
+  $ exists code
+  $ exists code && echo "VS Code is installed"
+  $ exists git || echo "Git is not installed"
 
 
 Returns:
@@ -114,12 +114,12 @@ function gc() {
 Clone a Git repository and open it in Visual Studio Code.
 
 Usage:
-  \$ gc <git-repo-url>  # Clone the repo and open it in VS Code
-  \$ gc -h              # Show this help message
-  \$ gc                 # Same as -h
+  $ gc <git-repo-url>  # Clone the repo and open it in VS Code
+  $ gc -h              # Show this help message
+  $ gc                 # Same as -h
 
 Example:
-  \$ gc https://github.com/user/repo.git
+  $ gc https://github.com/user/repo.git
 EOF
     return 0
   fi
@@ -159,8 +159,8 @@ o() {
 Open a folder in the system's file explorer.
 
 Usage:
-  \$ o [path]          # Open the specified folder (or current folder if none given)
-  \$ o -h              # Show this help message
+  $ o [path]          # Open the specified folder (or current folder if none given)
+  $ o -h              # Show this help message
 
 Automatically detects and uses:
   - dolphin (Linux)
@@ -168,8 +168,8 @@ Automatically detects and uses:
   - open (macOS)
 
 Examples:
-  \$ o                  # Opens the current directory
-  \$ o ~/Downloads      # Opens the Downloads folder
+  $ o                  # Opens the current directory
+  $ o ~/Downloads      # Opens the Downloads folder
 EOF
     return 0
   fi
@@ -194,13 +194,13 @@ function remove_quarantine() {
 Remove the macOS quarantine flag from one or more files.
 
 Usage:
-  \$ remove_quarantine <file> [file2 ...]   # Remove the quarantine flag from one or more files
-  \$ remove_quarantine -h                   # Show this help message
-  \$ remove_quarantine                      # Same as -h
+  $ remove_quarantine <file> [file2 ...]   # Remove the quarantine flag from one or more files
+  $ remove_quarantine -h                   # Show this help message
+  $ remove_quarantine                      # Same as -h
 
 Example:
-  \$ remove_quarantine ./node_modules.zip
-  \$ remove_quarantine *.app
+  $ remove_quarantine ./node_modules.zip
+  $ remove_quarantine *.app
 
 Notes:
   - This is useful for files downloaded from the internet that macOS blocks from running.
@@ -226,17 +226,17 @@ function yt() {
 Download YouTube audio (MP3) or video (MP4) using yt-dlp.
 
 Usage:
-  \$ yt <URL>           # Download best video+audio (MP4) [default]
-  \$ yt -l <URL>        # List available formats
-  \$ yt -a <URL>        # Download best audio only (MP3)
-  \$ yt -v <URL>        # Download best 1080p video+audio (MP4)
-  \$ yt -h              # Show this help message
-  \$ yt                 # Same as -h
+  $ yt <URL>           # Download best video+audio (MP4) [default]
+  $ yt -l <URL>        # List available formats
+  $ yt -a <URL>        # Download best audio only (MP3)
+  $ yt -v <URL>        # Download best 1080p video+audio (MP4)
+  $ yt -h              # Show this help message
+  $ yt                 # Same as -h
 
 Examples:
-  \$ yt https://youtu.be/dQw4w9WgXcQ
-  \$ yt -a https://youtu.be/dQw4w9WgXcQ
-  \$ yt -l https://youtu.be/dQw4w9WgXcQ
+  $ yt https://youtu.be/dQw4w9WgXcQ
+  $ yt -a https://youtu.be/dQw4w9WgXcQ
+  $ yt -l https://youtu.be/dQw4w9WgXcQ
 
 Requirements:
   - yt-dlp must be installed and available in your PATH
@@ -274,10 +274,10 @@ function zipper() {
 Zip each folder or the contents of each folder within the current directory.
 
 Usage:
-  \$ zipper -c              # Zip the contents of each folder (excluding the folder itself)
-  \$ zipper -i              # Zip each folder (including the folder itself)
-  \$ zipper -h              # Show this help message
-  \$ zipper                 # Same as -h
+  $ zipper -c              # Zip the contents of each folder (excluding the folder itself)
+  $ zipper -i              # Zip each folder (including the folder itself)
+  $ zipper -h              # Show this help message
+  $ zipper                 # Same as -h
 
 Notes:
   - All .zip files in the current directory will be removed before zipping.
