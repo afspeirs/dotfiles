@@ -37,6 +37,16 @@ Then use GNU stow to create symlinks
 stow .
 ```
 
+### Installation on Windows
+
+If you are on windows you cannot use stow (unless you use WSL). As there is just a `.bash_aliases` file we can create a symbolic link
+
+As an admin run the below script, making sure to update the paths to be correct for your computer:
+
+```bash
+mklink "\Users\<USERNAME>\.bash_aliases" "\Users\<USERNAME>\PATH\TO\FOLDER\dotfiles\.bash_aliases"
+```
+
 ### Setup `.bashrc` file
 
 Your `.bashrc` file needs to be setup to import the `.bash_aliases` file. To do so add the following to the `.bashrc` file:
