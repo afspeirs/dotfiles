@@ -18,6 +18,6 @@ EOF
 
   for element in "${filenames[@]}"; do
     mkdir -p "$element"
-    echo "Created: $element"
+    echo "🟢 Created: $element"
   done
 }

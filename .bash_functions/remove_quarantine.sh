@@ -22,10 +22,10 @@ EOF
   for file in "$@"; do
     if [ -e "$file" ]; then
       xattr -d com.apple.quarantine "$file" 2>/dev/null \
-        && echo "Removed quarantine flag from: $file" \
-        || echo "Failed to remove quarantine flag from: $file"
+        && echo "🟢 Removed quarantine flag from: $file" \
+        || echo "🔴 Failed to remove quarantine flag from: $file"
     else
-      echo "File not found: $file"
+      echo "🔴 Error: File not found '$file'"
     fi
   done
 }

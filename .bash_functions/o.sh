@@ -28,7 +28,7 @@ EOF
   elif exists open; then
     open "$target"
   else
-    echo "No supported file explorer found. Please open '$target' manually."
+    echo "🔴 Error: No supported file explorer found. Please open '$target' manually."
     return 1
   fi
 }

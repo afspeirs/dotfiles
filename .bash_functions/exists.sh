@@ -33,16 +33,14 @@ EOF
   cmd="$1"
 
   if command -v "$cmd" >/dev/null 2>&1; then
-    # Command exists
     if [ $negate -eq 1 ]; then
-      return 1  # Negated: fail because it exists
+      return 1 # Negated: fail because it exists
     else
       return 0
     fi
   else
-    # Command does not exist
     if [ $negate -eq 1 ]; then
-      return 0  # Negated: success because it does not exist
+      return 0 # Negated: success because it does not exist
     else
       return 1
     fi

@@ -19,7 +19,7 @@ EOF
   git clone "$1"
 
   if [ $? -ne 0 ]; then
-    echo "Failed to clone repository."
+    echo "🔴 Error: Failed to clone repository."
     return 1
   fi
 

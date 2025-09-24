@@ -23,7 +23,7 @@ EOF
   fi
 
   if exists ! yt-dlp; then
-    echo "Error: yt-dlp is not installed. Please install it."
+    echo "🔴 Error: yt-dlp is not installed. Please install it."
     return 1
   fi
 

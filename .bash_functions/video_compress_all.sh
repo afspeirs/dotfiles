@@ -9,12 +9,12 @@ Usage:
   $ video_compress_all                              # Same as -h
 
 Arguments:
-  [directory]   Directory containing videos (non-recursive). Default: current directory
-  [crf]         Constant Rate Factor for video quality (lower = better, larger file).
-                Typical range: 18–28. Default: 23
-  [preset]      x264 speed/efficiency trade-off:
-                ultrafast, superfast, veryfast, faster, fast, medium,
-                slow, slower, veryslow. Default: slow
+  [directory]   # Directory containing videos (non-recursive). Default: current directory
+  [crf]         # Constant Rate Factor for video quality (lower = better, larger file).
+                  Typical range: 18-28. Default: 23
+  [preset]      # x264 speed/efficiency trade-off:
+                  ultrafast, superfast, veryfast, faster, fast, medium,
+                  slow, slower, veryslow. Default: slow
 
 What it does:
   - Calls: video_compress <input> [crf] [preset] for each file
@@ -31,12 +31,11 @@ EOF
 
   # Preconditions
   if [ ! -d "$dir" ]; then
-    echo "Error: directory '$dir' not found." >&2
+    echo "🔴 Error: directory '$dir' not found." >&2
     return 1
   fi
   if exists ! video_compress; then
-    echo "Error: video_compress is not defined in this shell." >&2
-    echo "Tip: load/define video_compress before running video_compress_all." >&2
+    echo "🔴 Error: video_compress is not defined." >&2
     return 1
   fi
 
@@ -59,10 +58,9 @@ EOF
     local base output
     base="${f%.*}"
 
-    # Skip files already compressed (ends with _compressed)
     case "$base" in
       *_compressed)
-        echo "Skip (already compressed): $(basename "$f")"
+        echo "🟡 Skip (already compressed): $(basename "$f")"
         skipped=$((skipped + 1))
         continue
         ;;
@@ -70,30 +68,28 @@ EOF
 
     output="${base}_compressed.mp4"
 
-    # Skip if target already exists
     if [ -f "$output" ]; then
-      echo "Skip (output exists): $(basename "$output")"
+      echo "🟡 Skip (output exists): $(basename "$output")"
       skipped=$((skipped + 1))
       continue
     fi
 
-    echo "Compressing: $(basename "$f") → $(basename "$output")"
     if video_compress "$f" "$crf" "$preset"; then
       processed=$((processed + 1))
     else
-      echo "Failed: $(basename "$f")" >&2
+      echo "🔴 Failed: $(basename "$f")" >&2
       failed=$((failed + 1))
     fi
   done
 
   if [ "$count" -eq 0 ]; then
-    echo "No video files found in: $dir"
+    echo "🔴 Failed: No video files found in '$dir'"
     return 0
   fi
 
-  echo "— Summary —"
-  echo "Found:     $count"
-  echo "Processed: $processed"
-  echo "Skipped:   $skipped"
-  echo "Failed:    $failed"
+  echo "   — Summary —"
+  echo "   Found:     $count"
+  echo "   Processed: $processed"
+  echo "   Skipped:   $skipped"
+  echo "   Failed:    $failed"
 }

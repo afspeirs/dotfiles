@@ -17,8 +17,8 @@ $(
   find ~/dotfiles/.bash_functions -name "*.sh" -type f 2>/dev/null |
   while IFS= read -r file; do
     base=$(basename "$file" .sh)
-    echo "$base" # Just output the base name
-  done | grep -v -E '^(dotfiles|exists)$' | sort | sed 's/^/  $ /' # Filter, sort, then add formatting
+    echo "$base"
+  done | grep -v -E '^(dotfiles|exists)$' | sort | sed 's/^/  $ /' # filter, sort, format
 )
 EOF
     return 0
@@ -36,8 +36,8 @@ EOF
       git -C ~/dotfiles pull
       ;;
     *)
-      echo "Unknown option: $1"
-      echo "Run 'df -h' for usage."
+      echo "🔴 Unknown option: $1"
+      echo "   Run 'dotfiles -h' for usage."
       return 1
       ;;
   esac

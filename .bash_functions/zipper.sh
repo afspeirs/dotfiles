@@ -19,7 +19,7 @@ EOF
 
   # Confirm before deleting existing zip files
   if compgen -G "*.zip" > /dev/null; then
-    echo "Removing existing .zip files in the current directory..."
+    echo "🔴 Removing existing .zip files in the current directory..."
     rm -f ./*.zip
   fi
 
@@ -27,20 +27,20 @@ EOF
     "-c")
       for dir in */; do
         [ -d "$dir" ] || continue
-        echo "Zipping contents of: $dir"
+        echo "🟡 Zipping contents of: $dir"
         (cd "$dir" && zip -r "../${dir%/}.zip" .)
       done
       ;;
     "-i")
       for dir in */; do
         [ -d "$dir" ] || continue
-        echo "Zipping folder: $dir"
+        echo "🟡 Zipping folder: $dir"
         zip -r "${dir%/}.zip" "$dir"
       done
       ;;
-    "*")
-      echo "Unknown option: $1"
-      echo "Run 'zipper -h' for usage."
+    *)
+      echo "🔴 Unknown option: $1"
+      echo "   Run 'zipper -h' for usage."
       return 1
       ;;
   esac

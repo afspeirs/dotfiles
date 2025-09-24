@@ -20,7 +20,7 @@ EOF
 
   for dir in */; do
     [ -d "$dir" ] || continue
-    echo "Running in: $dir"
+    echo "🟡 Running in: $dir"
     (cd "$dir" && "$@")
   done
 }
