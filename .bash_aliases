@@ -79,31 +79,52 @@ EOF
 
 function exists() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
-    cat <<EOF
-Check if a command exists on the system.
+    cat <<'EOF'
+Check if a command exists on the system (with optional negation).
 
 Usage:
-  $ exists <command>       # Check if a command exists on the system
+  $ exists <command>       # Exit 0 if command exists, 1 if not
+  $ exists ! <command>     # Exit 0 if command does NOT exist, 1 if it does
   $ exists -h              # Show this help message
   $ exists                 # Same as -h
 
-Example:
+Examples:
   $ exists code
   $ exists code && echo "VS Code is installed"
   $ exists git || echo "Git is not installed"
-
+  $ exists ! docker && echo "Docker is NOT installed"
 
 Returns:
-  - Exit code 0 if the command exists
-  - Exit code 1 if the command does not exist
+  - Exit code 0 if the condition is true
+  - Exit code 1 if the condition is false
 EOF
     return 0
   fi
 
-  if command -v "$1" >/dev/null 2>&1; then
-    return 0
+  local negate=0
+  local cmd
+
+  if [ "$1" = "!" ]; then
+    negate=1
+    shift
+  fi
+
+  cmd="$1"
+
+  if command -v "$cmd" >/dev/null 2>&1; then
+    # Command exists
+    if [ $negate -eq 1 ]; then
+      return 1  # Negated: fail because it exists
+    else
+      return 0
+    fi
   else
-    return 1
+    # Command does not exist
+    if [ $negate -eq 1 ]; then
+      return 0  # Negated: success because it does not exist
+    else
+      return 1
+    fi
   fi
 }
 
@@ -272,7 +293,7 @@ EOF
     echo "Error: input file '$input' not found." >&2
     return 1
   fi
-  if ! command -v ffmpeg >/dev/null 2>&1; then
+  if exists ! ffmpeg; then
     echo "Error: ffmpeg is not installed or not on PATH." >&2
     return 1
   fi
@@ -329,7 +350,7 @@ EOF
     echo "Error: directory '$dir' not found." >&2
     return 1
   fi
-  if ! command -v video_compress >/dev/null 2>&1; then
+  if exists ! video_compress; then
     echo "Error: video_compress is not defined in this shell." >&2
     echo "Tip: load/define video_compress before running video_compress_all." >&2
     return 1
