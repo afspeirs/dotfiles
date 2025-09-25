@@ -1,6 +1,6 @@
 function yt() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
-    cat <<EOF
+    cat <<'EOF'
 Download YouTube audio (MP3) or video (MP4) using yt-dlp.
 
 Usage:

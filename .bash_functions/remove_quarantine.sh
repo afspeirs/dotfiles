@@ -1,6 +1,6 @@
 function remove_quarantine() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
-    cat <<EOF
+    cat <<'EOF'
 Remove the macOS quarantine flag from one or more files.
 
 Usage:

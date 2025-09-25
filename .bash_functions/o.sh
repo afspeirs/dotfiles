@@ -1,6 +1,6 @@
 function o() {
   if [ "$1" = "-h" ]; then
-    cat <<EOF
+    cat <<'EOF'
 Open a folder in the system's file explorer.
 
 Usage:

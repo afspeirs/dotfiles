@@ -1,6 +1,6 @@
 function zipper() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
-    cat <<EOF
+    cat <<'EOF'
 Zip each folder or the contents of each folder within the current directory.
 
 Usage:

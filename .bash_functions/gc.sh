@@ -1,6 +1,6 @@
 function gc() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
-    cat <<EOF
+    cat <<'EOF'
 Clone a Git repository and open it in Visual Studio Code.
 
 Usage:

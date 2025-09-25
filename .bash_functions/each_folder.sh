@@ -1,6 +1,6 @@
 function each_folder() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
-    cat <<EOF
+    cat <<'EOF'
 Run a command in each subfolder of the current directory.
 
 Usage:
