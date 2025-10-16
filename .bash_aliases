@@ -18,3 +18,13 @@ if [ -d "$HOME/dotfiles/.bash_functions" ]; then
     fi
   done
 fi
+
+# Update Prompt
+
+parse_git_branch() {
+  local branch
+  branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  [[ -n "$branch" ]] && echo "($branch)"
+}
+
+export PS1="\[\033[36m\]\w\[\033[00m\] \[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
