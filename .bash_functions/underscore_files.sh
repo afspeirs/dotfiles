@@ -12,6 +12,9 @@ Notes:
   - Only regular files in the specified folder are processed.
   - Subdirectories and hidden files are ignored.
   - If no files need renaming, nothing will be changed.
+
+Example
+  $ underscore_files .                 # Rename files in the current directory
 EOF
     return 0
   fi
