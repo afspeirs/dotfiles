@@ -44,7 +44,7 @@ If you are on windows you cannot use stow (unless you use WSL). As there is just
 As an admin run the below script, making sure to update the paths to be correct for your computer:
 
 ```bash
-mklink "\Users\<USERNAME>\loader\.dotfiles_loader.sh" "\Users\<USERNAME>\PATH\TO\FOLDER\dotfiles\loader\.dotfiles_loader.sh"
+mklink "\Users\<USERNAME>\.dotfiles_loader.sh" "\Users\<USERNAME>\PATH\TO\FOLDER\dotfiles\loader\.dotfiles_loader.sh"
 ```
 
 ### Setup `.bashrc` file
@@ -57,5 +57,4 @@ Your `.bashrc` file needs to be setup to import the `.dotfiles_loader.sh` file. 
 if [ -f "$HOME/.dotfiles_loader.sh" ]; then
     source "$HOME/.dotfiles_loader.sh"
 fi
-
 ```
