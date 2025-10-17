@@ -4,17 +4,17 @@ function dotfiles() {
 Manage the dotfiles repository.
 
 Usage:
-  $ dotfiles open            # Open the dotfiles repo in VS Code (if available) or .bash_aliases in nano
+  $ dotfiles open            # Open the dotfiles repo in VS Code (if available) or navigates to the dotfiles repo
   $ dotfiles pull            # Pull the latest changes from the dotfiles repo
   $ dotfiles -h              # Show this help message
   $ dotfiles                 # Same as -h
 
 Aliases:
-$(grep '^alias ' ~/dotfiles/.bash_aliases 2>/dev/null | grep -v 'alias edit' | awk -F'[ =]' '{print "  $ "$2}')
+$(grep '^alias ' $DOTFILES_DIR/.aliases.sh 2>/dev/null | grep -v 'alias edit' | awk -F'[ =]' '{print "  $ "$2}')
 
 Functions:      # Use -h with any function below to show help
 $(
-  find ~/dotfiles/.bash_functions -name "*.sh" -type f 2>/dev/null |
+  find $DOTFILES_DIR/functions -name "*.sh" -type f 2>/dev/null |
   while IFS= read -r file; do
     base=$(basename "$file" .sh)
     echo "$base"
@@ -29,7 +29,7 @@ EOF
       if exists code; then
         code ~/dotfiles
       else
-        nano ~/dotfiles/.bash_aliases
+        cd ~/dotfiles
       fi
       ;;
     "pull")

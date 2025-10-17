@@ -1,0 +1,18 @@
+DOTFILES_DIR="$HOME/dotfiles/shell"
+
+# Source aliases, if the file exists.
+if [ -f "$DOTFILES_DIR/.aliases.sh" ]; then
+  source "$DOTFILES_DIR/.aliases.sh"
+fi
+
+# Source all function files, if the directory exists.
+if [ -d "$DOTFILES_DIR/functions" ]; then
+  for function_file in "$DOTFILES_DIR/functions/"*.sh; do
+    source "$function_file"
+  done
+fi
+
+# Source the prompt setup, if the file exists.
+if [ -f "$DOTFILES_DIR/.prompt.sh" ]; then
+  source "$DOTFILES_DIR/.prompt.sh"
+fi
