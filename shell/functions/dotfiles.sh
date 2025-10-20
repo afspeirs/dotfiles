@@ -6,6 +6,7 @@ Manage the dotfiles repository.
 Usage:
   $ dotfiles open            # Open the dotfiles repo in VS Code (if available) or navigates to the dotfiles repo
   $ dotfiles pull            # Pull the latest changes from the dotfiles repo
+  $ dotfiles reload          # Reload the shell
   $ dotfiles -h              # Show this help message
   $ dotfiles                 # Same as -h
 
@@ -31,6 +32,10 @@ EOF
       ;;
     "pull")
       git -C ~/dotfiles pull
+      ;;
+    "reload")
+      echo "Reloading shell..."
+      exec $SHELL
       ;;
     *)
       echo "🔴 Unknown option: $1"
