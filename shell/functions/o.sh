@@ -22,7 +22,7 @@ EOF
   target="${1:-.}"
 
   if exists dolphin; then
-    dolphin "$target" > /dev/null 2>&1 &
+    (dolphin "$target" > /dev/null 2>&1 &)
   elif exists explorer.exe; then
     explorer.exe "$target"
   elif exists open; then
