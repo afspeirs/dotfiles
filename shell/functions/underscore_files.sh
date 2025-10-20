@@ -21,18 +21,15 @@ EOF
 
   TARGET_DIR="$1"
 
-  if [ ! -d "$TARGET_DIR" ]; then
+  if [[ ! -d "$TARGET_DIR" ]]; then
     echo "🔴 Error: '$TARGET_DIR' is not a valid directory."
     return 1
   fi
 
-  for file in "$TARGET_DIR"/*; do
-    [ -f "$file" ] || continue
+  find "$TARGET_DIR" -type f -name "* *" -print0 | while IFS= read -r -d '' file; do
     base_name=$(basename "$file")
-    if [[ "$base_name" == *" "* ]]; then
-      new_name="${base_name// /_}"
-      echo "🟡 Renaming: '$base_name' → '$new_name'"
-      mv -- "$file" "$TARGET_DIR/$new_name"
-    fi
+    new_name="${base_name// /_}"
+    echo "🟡 Renaming: '$base_name' → '$new_name'"
+    mv -- "$file" "$TARGET_DIR/$new_name"
   done
 }

@@ -1,8 +1,21 @@
 alias edit=nano
 
+# Find and delete all .DS_Store files
 alias delete_ds="find . -name '.DS_Store' -type f -delete"
-alias docker_prune="docker system prune -a --volumes"
-alias gb="git branch -r | grep -v '\->' | grep 'origin/' | sed 's/origin\///g'"
-alias gr="git reset --soft HEAD~1"
-alias ip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '"'"'{print $2}'"'"
-alias mysql_start="brew services start mysql"
+
+if exists docker; then
+  # Prune all unused docker objects
+  alias docker_prune="docker system prune -a --volumes"
+fi
+
+if exists git; then
+  # List all git branches
+  alias gb="git branch -r | grep -v '\->' | grep 'origin/' | sed 's/origin\///g'"
+  # Reset the last git commit
+  alias gr="git reset --soft HEAD~1"
+fi
+
+if exists brew; then
+  # Start the mysql service
+  alias mysql_start="brew services start mysql"
+fi

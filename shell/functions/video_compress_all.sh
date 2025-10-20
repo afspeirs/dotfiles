@@ -30,7 +30,7 @@ EOF
   local preset="${3:-slow}"
 
   # Preconditions
-  if [ ! -d "$dir" ]; then
+  if [[ ! -d "$dir" ]]; then
     echo "🔴 Error: directory '$dir' not found." >&2
     return 1
   fi
@@ -42,7 +42,7 @@ EOF
   local count=0 processed=0 skipped=0 failed=0
 
   for f in "$dir"/*; do
-    [ -f "$f" ] || continue
+    [[ -f "$f" ]] || continue
 
     # Lowercase extension for matching
     local ext
@@ -68,7 +68,7 @@ EOF
 
     output="${base}_compressed.mp4"
 
-    if [ -f "$output" ]; then
+    if [[ -f "$output" ]]; then
       echo "🟡 Skip (output exists): $(basename "$output")"
       skipped=$((skipped + 1))
       continue

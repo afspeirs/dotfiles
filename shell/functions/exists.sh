@@ -1,5 +1,5 @@
 function exists() {
-  if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
+  if [[ "$#" -eq 0 ]] || [[ "$1" = "-h" ]]; then
     cat <<'EOF'
 Check if a command exists on the system (with optional negation).
 
@@ -25,21 +25,21 @@ EOF
   local negate=0
   local cmd
 
-  if [ "$1" = "!" ]; then
+  if [[ "$1" = "!" ]]; then
     negate=1
     shift
   fi
 
   cmd="$1"
 
-  if command -v "$cmd" >/dev/null 2>&1; then
-    if [ $negate -eq 1 ]; then
+  if type "$cmd" >/dev/null 2>&1; then
+    if [[ $negate -eq 1 ]]; then
       return 1 # Negated: fail because it exists
     else
       return 0
     fi
   else
-    if [ $negate -eq 1 ]; then
+    if [[ $negate -eq 1 ]]; then
       return 0 # Negated: success because it does not exist
     else
       return 1

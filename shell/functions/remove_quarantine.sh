@@ -20,7 +20,7 @@ EOF
   fi
 
   for file in "$@"; do
-    if [ -e "$file" ]; then
+    if [[ -e "$file" ]]; then
       xattr -d com.apple.quarantine "$file" 2>/dev/null \
         && echo "🟢 Removed quarantine flag from: $file" \
         || echo "🔴 Failed to remove quarantine flag from: $file"

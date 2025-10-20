@@ -40,7 +40,7 @@ EOF
       shift
       yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" --merge-output-format mp4 --add-metadata "$@"
       ;;
-    "*")
+    *)
       yt-dlp -f bestvideo+bestaudio/best --merge-output-format mp4 --add-metadata "$@"
       ;;
   esac

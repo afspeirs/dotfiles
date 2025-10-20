@@ -19,21 +19,28 @@ EOF
 
   # Confirm before deleting existing zip files
   if compgen -G "*.zip" > /dev/null; then
-    echo "🔴 Removing existing .zip files in the current directory..."
-    rm -f ./*.zip
+    echo -n "🔴 Found existing .zip files. Remove them? (y/N) "
+    read -r answer
+    if [[ "$answer" =~ ^[Yy]$ ]]; then
+      echo "🔴 Removing existing .zip files in the current directory..."
+      rm -f ./*.zip
+    else
+      echo "🟡 Aborting."
+      return 0
+    fi
   fi
 
   case "$1" in
     "-c")
       for dir in */; do
-        [ -d "$dir" ] || continue
+        [[ -d "$dir" ]] || continue
         echo "🟡 Zipping contents of: $dir"
         (cd "$dir" && zip -r "../${dir%/}.zip" .)
       done
       ;;
     "-i")
       for dir in */; do
-        [ -d "$dir" ] || continue
+        [[ -d "$dir" ]] || continue
         echo "🟡 Zipping folder: $dir"
         zip -r "${dir%/}.zip" "$dir"
       done

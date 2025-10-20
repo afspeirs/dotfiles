@@ -19,7 +19,7 @@ EOF
   fi
 
   for dir in */; do
-    [ -d "$dir" ] || continue
+    [[ -d "$dir" ]] || continue
     echo "🟡 Running in: $dir"
     (cd "$dir" && "$@")
   done

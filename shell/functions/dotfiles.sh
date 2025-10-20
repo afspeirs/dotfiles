@@ -10,15 +10,12 @@ Usage:
   $ dotfiles                 # Same as -h
 
 Aliases:
-$(grep '^alias ' $DOTFILES_DIR/.aliases.sh 2>/dev/null | grep -v 'alias edit' | awk -F'[ =]' '{print "  $ "$2}')
+$(awk -F'alias ' '/^ *alias / && !/alias edit/ { sub(/=.*/, "", $2); print "  $ " $2 }' $DOTFILES_DIR/.aliases.sh)
 
 Functions:      # Use -h with any function below to show help
 $(
-  find $DOTFILES_DIR/functions -name "*.sh" -type f 2>/dev/null |
-  while IFS= read -r file; do
-    base=$(basename "$file" .sh)
-    echo "$base"
-  done | grep -v -E '^(dotfiles|exists)$' | sort | sed 's/^/  $ /' # filter, sort, format
+  find $DOTFILES_DIR/functions -name "*.sh" -type f -exec basename {} .sh \; |
+  grep -v -E '^(dotfiles|exists)$' | sort | sed 's/^/  $ /'
 )
 EOF
     return 0
