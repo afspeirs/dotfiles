@@ -6,6 +6,7 @@ _dotfiles_completion() {
         "open:Open the dotfiles repo in VS Code or navigates to it"
         "pull:Pull the latest changes from the dotfiles repo"
         "reload:Reload the shell"
+        "stow:re-link dotfiles repo files"
     )
     _describe "dotfiles commands" subcommands
 }

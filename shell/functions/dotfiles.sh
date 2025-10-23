@@ -37,6 +37,10 @@ EOF
       echo "Reloading shell..."
       exec $SHELL
       ;;
+    "stow")
+      echo "re-link dotfiles repo files"
+      stow loader
+      ;;
     *)
       echo "🔴 Unknown option: $1"
       echo "   Run 'dotfiles -h' for usage."
