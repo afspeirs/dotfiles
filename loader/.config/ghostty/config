@@ -13,7 +13,7 @@
 # a full restart to take effect.
 
 window-theme = dark
-window-decoration = client
+window-decoration = auto
 window-padding-color = extend
 background-opacity = 0.95
 background-blur = 0
