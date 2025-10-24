@@ -2,6 +2,16 @@
 
 # Bootstrap script for setting up dependencies for the dotfiles repository.
 
+# --- Repository Cloning ---
+
+if [ ! -d "$HOME/dotfiles" ]; then
+  echo "Cloning dotfiles repository..."
+  git clone https://github.com/afspeirs/dotfiles.git "$HOME/dotfiles"
+  cd "$HOME/dotfiles" || exit
+else
+  echo "✅ Dotfiles repository already exists."
+fi
+
 # Function to check if a command exists
 function exists() {
   command -v "$1" >/dev/null 2>&1

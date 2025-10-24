@@ -4,29 +4,16 @@ This directory contains the dotfiles for my system.
 
 ## Installation
 
-This section provides a more detailed breakdown of the installation process.
-
-### 1. Clone the Repository
-
-First, clone the dotfiles repo into your `$HOME` directory.
+To get started, you can run the `bootstrap.sh` script directly from the repository. This will clone the repository to `~/dotfiles` if it doesn't exist, and then proceed with the setup.
 
 ```bash
-git clone git@github.com:afspeirs/dotfiles.git
-cd dotfiles
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/afspeirs/dotfiles/main/bootstrap.sh)"
 ```
 
-### 2. Install Dependencies
-
-This repository comes with a `bootstrap.sh` script that checks for all necessary dependencies and provides installation instructions if any are missing.
-
-Run the following commands to make the script executable and then run it:
-
-```bash
-chmod +x bootstrap.sh
-./bootstrap.sh
-```
+### Dependencies
 
 The script checks for the following dependencies:
+
 - `ffmpeg`
 - `ghostty`
 - `git`
@@ -34,7 +21,7 @@ The script checks for the following dependencies:
 - `stow`
 - `yt-dlp`
 
-### 3. Stow the Dotfiles
+### Stow the Dotfiles
 
 This repository uses `stow` to create symlinks for the dotfiles.
 
@@ -42,7 +29,7 @@ This repository uses `stow` to create symlinks for the dotfiles.
 stow loader
 ```
 
-### 4. Source the Loader Script
+### Source the Loader Script
 
 The `bootstrap.sh` script will attempt to automatically configure your shell (`.bashrc` or `.zshrc`) to source the `.dotfiles_loader.sh` file. If the script cannot detect your shell or if you prefer to do it manually, add the following to your shell's configuration file:
 
