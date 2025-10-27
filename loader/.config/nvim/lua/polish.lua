@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     -- Trim trailing whitespace
     vim.cmd([[keeppatterns %s/\s\+$//e]])
     -- Remove multiple trailing newlines and add a single one if missing
-    vim.cmd([[keeppatterns %s/\n\+$/\r/e]])
+    -- vim.cmd([[keeppatterns %s/\n\+$/\r/e]])
     vim.fn.winrestview(view)
   end,
   desc = "Trim trailing whitespace and ensure final newline on save",
