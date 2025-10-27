@@ -15,6 +15,10 @@ if exists git; then
   alias gr="git reset --soft HEAD~1"
 fi
 
+if exists lazygit; then
+  alias lg="lazygit"
+fi
+
 if exists brew; then
   # Start the mysql service
   alias mysql_start="brew services start mysql"
