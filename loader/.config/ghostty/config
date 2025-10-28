@@ -12,10 +12,10 @@
 # reloaded while running; some only apply to new windows and others may require
 # a full restart to take effect.
 
-window-theme = dark
+background-blur = 0
+background-opacity = 0.95
+font-family = Fira Code
+theme = Aurora
 window-decoration = auto
 window-padding-color = extend
-background-opacity = 0.95
-background-blur = 0
-theme = Aurora
-font-family = Fira Code
+window-theme = dark
