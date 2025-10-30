@@ -12,9 +12,14 @@ if [[ -f "$DOTFILES_DIR/.aliases.sh" ]]; then
   source "$DOTFILES_DIR/.aliases.sh"
 fi
 
-# Source the prompt setup, if the file exists.
-if [[ -f "$DOTFILES_DIR/.prompt.sh" ]]; then
-  source "$DOTFILES_DIR/.prompt.sh"
+if exists starship; then
+  # curl -sS https://starship.rs/install.sh | sh
+  eval "$(starship init $SHELL)"
+else
+  # Source the prompt setup, if the file exists.
+  if [[ -f "$DOTFILES_DIR/.prompt.sh" ]]; then
+    source "$DOTFILES_DIR/.prompt.sh"
+  fi
 fi
 
 if [ -n "$ZSH_VERSION" ]; then

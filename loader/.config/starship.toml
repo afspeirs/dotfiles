@@ -1,0 +1,177 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](theme1)\
+$os\
+$username\
+[](bg:theme2 fg:theme1)\
+$directory\
+[](bg:theme3 fg:theme2)\
+$git_branch\
+$git_status\
+[](fg:theme3 bg:theme4)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](fg:theme4 bg:theme5)\
+$docker_context\
+[ ](fg:theme5)\
+$cmd_duration\
+$line_break\
+$character"""
+
+palette = 'afspeirs'
+
+[os]
+disabled = false
+style = "bg:theme1 fg:background"
+
+[os.symbols]
+Windows = ""
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+AOSC = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
+[username]
+show_always = true
+style_user = "bg:theme1 fg:background"
+style_root = "bg:theme1 fg:background"
+format = '[ $user ]($style)'
+
+[directory]
+style = "bg:theme2 fg:background"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:theme3"
+format = '[[ $symbol $branch ](fg:background bg:theme3)]($style)'
+
+[git_status]
+style = "bg:theme3"
+format = '[[($all_status$ahead_behind )](fg:background bg:theme3)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:theme4"
+format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+
+[c]
+symbol = " "
+style = "bg:theme4"
+format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:theme4"
+format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:theme4"
+format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+
+[php]
+symbol = ""
+style = "bg:theme4"
+format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+
+[java]
+symbol = " "
+style = "bg:theme4"
+format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:theme4"
+format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:theme4"
+format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+
+[python]
+symbol = ""
+style = "bg:theme4"
+format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:background bg:theme4)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:theme5"
+format = '[[ $symbol( $context) ](fg:background bg:theme5)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:green)'
+error_symbol = '[❯](bold fg:red)'
+vimcmd_symbol = '[❮](bold fg:pink)'
+vimcmd_replace_one_symbol = '[❮](bold fg:pink)'
+vimcmd_replace_symbol = '[❮](bold fg:pink)'
+vimcmd_visual_symbol = '[❮](bold fg:orange)'
+
+[cmd_duration]
+show_milliseconds = true
+format = " in $duration "
+style = "bg:pink"
+disabled = false
+show_notifications = true
+min_time_to_notify = 45000
+
+[palettes.dark_modern]
+background = "#121212"
+foreground = "#f5f5f5"
+theme1 = "#255abb"
+theme2 = "#f5f543"
+theme3 = "#f07000"
+theme4 = "#417e38"
+theme5 = "#29b8db"
+red = "#db5a58"
+orange = "#f07000"
+pink = "#d670d6"
+
+[palettes.afspeirs]
+background = "#121212"
+foreground = "#f5f5f5"
+theme1 = "#dbe6f8"
+theme2 = "#95b3ea"
+theme3 = "#4e80dc"
+theme4 = "#255abb"
+theme5 = "#15336a"
+red = "#db5a58"
+orange = "#f07000"
+pink = "#d670d6"
