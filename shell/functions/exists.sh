@@ -32,7 +32,7 @@ EOF
 
   cmd="$1"
 
-  if type "$cmd" >/dev/null 2>&1; then
+  if command -v "$cmd" >/dev/null 2>&1; then
     if [[ $negate -eq 1 ]]; then
       return 1 # Negated: fail because it exists
     else

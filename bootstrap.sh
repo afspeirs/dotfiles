@@ -14,7 +14,7 @@ fi
 
 # Function to check if a command exists
 function exists() {
-  type "$1" >/dev/null 2>&1
+  command -v "$1" >/dev/null 2>&1
 }
 
 # --- Dependency Checks ---
