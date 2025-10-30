@@ -28,4 +28,8 @@ if [ -n "$ZSH_VERSION" ]; then
   source "$HOME/dotfiles/shell/completions/_custom_completions.sh"
   autoload -Uz compinit
   compinit
+
+  if exists fzf; then
+    source <(fzf --zsh)
+  fi
 fi

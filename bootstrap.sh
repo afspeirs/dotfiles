@@ -31,6 +31,16 @@ else
   echo "   - Fedora: sudo dnf install ffmpeg"
 fi
 
+# Check for fzf
+if exists fzf; then
+  echo "✅ fzf is installed."
+else
+  echo "❌ fzf is not installed"
+  echo "   - macOS (with Homebrew): brew install fzf"
+  echo "   - Debian/Ubuntu: sudo apt-get install fzf"
+  echo "   - Fedora: sudo dnf install fzf"
+fi
+
 # Check for Ghostty
 if exists ghostty; then
   echo "✅ Ghostty is installed."
