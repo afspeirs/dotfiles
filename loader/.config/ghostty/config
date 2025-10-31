@@ -12,7 +12,7 @@
 # reloaded while running; some only apply to new windows and others may require
 # a full restart to take effect.
 
-background-blur = 0
+background-blur = false
 background-opacity = 0.95
 font-family = Fira Code
 macos-option-as-alt = true
@@ -21,3 +21,5 @@ theme = Aurora
 window-decoration = auto
 window-padding-color = extend
 window-theme = dark
+
+config-file = ?config_mac
