@@ -13,7 +13,6 @@ if [[ -f "$DOTFILES_DIR/.aliases.sh" ]]; then
 fi
 
 if exists starship; then
-  # curl -sS https://starship.rs/install.sh | sh
   eval "$(starship init $SHELL)"
 else
   # Source the prompt setup, if the file exists.

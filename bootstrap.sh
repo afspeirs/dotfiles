@@ -2,6 +2,10 @@
 
 # Bootstrap script for setting up dependencies for the dotfiles repository.
 
+# TODO: Actually install the dependencies if they are not installed instead of showing how, maybe with a prompt
+# This will need a helper function most likely to detect the os and download accordingly.
+# I will also need to handle flatpak and custom installs
+
 # --- Repository Cloning ---
 
 if [ ! -d "$HOME/dotfiles" ]; then
@@ -70,6 +74,14 @@ else
   echo "   - Fedora: sudo dnf install neovim"
 fi
 
+if exists starship; then
+  echo "✅ starship is installed."
+else
+  echo "❌ starship is not installed. This is required for the improved prompt configuration."
+  echo "   - macOS (with Homebrew): brew install starship"
+  echo "   - Linux: curl -sS https://starship.rs/install.sh | sh"
+fi
+
 # Check for Stow
 if exists stow; then
   echo "✅ Stow is installed."
@@ -89,6 +101,10 @@ else
   echo "   - Debian/Ubuntu: sudo apt-get install yt-dlp"
   echo "   - Fedora: sudo dnf install yt-dlp"
 fi
+
+# TODO: Check if the "Fira Code" font is installed and the nerd font too?
+# Not sure if I will be able to do that or if I can just say this is how you install it
+# curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz
 
 echo "Dependency check complete."
 
