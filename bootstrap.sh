@@ -2,12 +2,53 @@
 
 # Bootstrap script for setting up dependencies for the dotfiles repository.
 
-# TODO: Actually install the dependencies if they are not installed instead of showing how, maybe with a prompt
-# This will need a helper function most likely to detect the os and download accordingly.
-# I will also need to handle flatpak and custom installs
+# --- OS Detection ---
+
+os_type=""
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+  os_type=$ID
+elif [ "$(uname)" == "Darwin" ]; then
+  os_type="macos"
+fi
+
+echo "🧠 Detected OS: $os_type"
+
+# --- Install Helper Function ---
+
+function install_package() {
+  pkg="$1"
+  case "$os_type" in
+    ubuntu|debian)
+      sudo apt-get update && sudo apt-get install -y "$pkg"
+      ;;
+    fedora)
+      sudo dnf install -y "$pkg"
+      ;;
+    arch)
+      sudo pacman -Sy "$pkg"
+      ;;
+    macos)
+      brew install "$pkg"
+      ;;
+    *)
+      echo "⚠️ Unsupported OS. Please install $pkg manually."
+      ;;
+  esac
+}
+
+# --- Flatpak Install Helper ---
+
+function install_flatpak() {
+  app="$1"
+  if command -v flatpak >/dev/null 2>&1; then
+    flatpak install -y flathub "$app"
+  else
+    echo "❌ Flatpak is not installed. Cannot install $app via Flatpak."
+  fi
+}
 
 # --- Repository Cloning ---
-
 if [ ! -d "$HOME/dotfiles" ]; then
   echo "Cloning dotfiles repository..."
   git clone https://github.com/afspeirs/dotfiles.git "$HOME/dotfiles"
@@ -25,27 +66,18 @@ function exists() {
 
 echo "Checking for required dependencies..."
 
-# Check for ffmpeg
-if exists ffmpeg; then
-  echo "✅ ffmpeg is installed."
-else
-  echo "❌ ffmpeg is not installed. This is required for video compression."
-  echo "   - macOS (with Homebrew): brew install ffmpeg"
-  echo "   - Debian/Ubuntu: sudo apt-get install ffmpeg"
-  echo "   - Fedora: sudo dnf install ffmpeg"
-fi
+packages=(ffmpeg fzf git nvim starship stow yt-dlp)
 
-# Check for fzf
-if exists fzf; then
-  echo "✅ fzf is installed."
-else
-  echo "❌ fzf is not installed"
-  echo "   - macOS (with Homebrew): brew install fzf"
-  echo "   - Debian/Ubuntu: sudo apt-get install fzf"
-  echo "   - Fedora: sudo dnf install fzf"
-fi
+for pkg in "${packages[@]}"; do
+  if exists "$pkg"; then
+    echo "✅ $pkg is installed."
+  else
+    echo "❌ $pkg is not installed. Installing..."
+    install_package "$pkg"
+  fi
+done
 
-# Check for Ghostty
+# Ghostty (custom install)
 if exists ghostty; then
   echo "✅ Ghostty is installed."
 else
@@ -53,58 +85,26 @@ else
   echo "   - See installation instructions at https://github.com/ghostty-org/ghostty"
 fi
 
-# Check for Git
-if exists git; then
-  echo "✅ Git is installed."
+# --- Font Installation ---
+# TODO: Check for font better, it give false errors currently
+FONT_DIR="$HOME/.local/share/fonts"
+FONT_FILE="$FONT_DIR/FiraCode-Regular.ttf"
+if [ ! -f "$FONT_FILE" ]; then
+  echo "❌ Fira Code Nerd Font is not installed."
+  read -p "   Would you like to download it now? (y/N): " install_font
+  if [[ "$install_font" =~ ^[Yy]$ ]]; then
+    echo "Download Fira Code Nerd Font..."
+    # mkdir -p "$FONT_DIR"
+    curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz
+    # tar -xf FiraCode.tar.xz -C "$FONT_DIR"
+    # fc-cache -fv
+    echo "✅ Font downloaded."
+  else
+    echo "⏭️ Skipping font installation."
+  fi
 else
-  echo "❌ Git is not installed. Please install it to continue."
-  # Instructions for different package managers
-  echo "   - macOS (with Homebrew): brew install git"
-  echo "   - Debian/Ubuntu: sudo apt-get install git"
-  echo "   - Fedora: sudo dnf install git"
+  echo "✅ Fira Code Nerd Font is already installed."
 fi
-
-# Check for Neovim
-if exists nvim; then
-  echo "✅ Neovim is installed."
-else
-  echo "❌ Neovim is not installed. This is required for the Neovim configuration."
-  echo "   - macOS (with Homebrew): brew install neovim"
-  echo "   - Debian/Ubuntu: sudo apt-get install neovim"
-  echo "   - Fedora: sudo dnf install neovim"
-fi
-
-if exists starship; then
-  echo "✅ starship is installed."
-else
-  echo "❌ starship is not installed. This is required for the improved prompt configuration."
-  echo "   - macOS (with Homebrew): brew install starship"
-  echo "   - Linux: curl -sS https://starship.rs/install.sh | sh"
-fi
-
-# Check for Stow
-if exists stow; then
-  echo "✅ Stow is installed."
-else
-  echo "❌ Stow is not installed. This is required for managing dotfiles."
-  echo "   - macOS (with Homebrew): brew install stow"
-  echo "   - Debian/Ubuntu: sudo apt-get install stow"
-  echo "   - Fedora: sudo dnf install stow"
-fi
-
-# Check for yt-dlp
-if exists yt-dlp; then
-  echo "✅ yt-dlp is installed."
-else
-  echo "❌ yt-dlp is not installed. This is required for downloading YouTube videos."
-  echo "   - macOS (with Homebrew): brew install yt-dlp"
-  echo "   - Debian/Ubuntu: sudo apt-get install yt-dlp"
-  echo "   - Fedora: sudo dnf install yt-dlp"
-fi
-
-# TODO: Check if the "Fira Code" font is installed and the nerd font too?
-# Not sure if I will be able to do that or if I can just say this is how you install it
-# curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz
 
 echo "Dependency check complete."
 
@@ -112,13 +112,13 @@ echo "Dependency check complete."
 
 echo "Configuring shell..."
 
-LOADER_SNIPPET='''
+LOADER_SNIPPET='
 # Start dotfiles loader
 if [ -f "$HOME/.dotfiles_loader.sh" ]; then
   source "$HOME/.dotfiles_loader.sh"
 fi
 # End dotfiles loader
-'''
+'
 
 RC_FILE=""
 if [[ "$SHELL" == *"/bash" ]]; then
