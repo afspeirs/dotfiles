@@ -106,26 +106,45 @@ if exists tmux; then
 fi
 
 # --- Font Installation ---
-# TODO: Check for font better, it give false errors currently
-FONT_DIR="$HOME/.local/share/fonts"
-FONT_FILE="$FONT_DIR/FiraCode-Regular.ttf"
-if [ ! -f "$FONT_FILE" ]; then
+
+font_installed=false
+if [ "$os_type" == "macos" ]; then
+  if system_profiler SPFontsDataType | grep -q "Fira Code"; then
+    font_installed=true
+  fi
+else
+  if fc-list | grep -q "FiraCode"; then
+    font_installed=true
+  fi
+fi
+
+if [ "$font_installed" = true ]; then
+  echo "✅ Fira Code Nerd Font is already installed."
+else
   echo "❌ Fira Code Nerd Font is not installed."
   read -p "   Would you like to download it now? (y/N): " install_font
   if [[ "$install_font" =~ ^[Yy]$ ]]; then
-    echo "Download Fira Code Nerd Font..."
-    # mkdir -p "$FONT_DIR"
-    curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz
-    # tar -xf FiraCode.tar.xz -C "$FONT_DIR"
-    # fc-cache -fv
-    echo "✅ Font downloaded."
+    if [ "$os_type" == "macos" ]; then
+      FONT_DIR="$HOME/Library/Fonts"
+    else
+      FONT_DIR="$HOME/.local/share/fonts"
+    fi
+
+    echo "Downloading Fira Code Nerd Font..."
+    mkdir -p "$FONT_DIR"
+    curl -L https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz -o /tmp/FiraCode.tar.xz
+    tar -xf /tmp/FiraCode.tar.xz -C "$FONT_DIR"
+    rm /tmp/FiraCode.tar.xz
+
+    if [ "$os_type" != "macos" ]; then
+      fc-cache -fv
+    fi
+
+    echo "✅ Font downloaded and installed."
   else
     echo "⏭️ Skipping font installation."
   fi
-else
-  echo "✅ Fira Code Nerd Font is already installed."
 fi
-
 echo "Dependency check complete."
 
 # --- Shell Configuration ---
