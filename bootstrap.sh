@@ -66,7 +66,16 @@ function exists() {
 
 echo "Checking for required dependencies..."
 
-packages=(ffmpeg fzf git nvim starship stow yt-dlp)
+packages=(
+  ffmpeg
+  fzf
+  git
+  nvim
+  starship
+  stow
+  tmux
+  yt-dlp
+)
 
 for pkg in "${packages[@]}"; do
   if exists "$pkg"; then
@@ -83,6 +92,17 @@ if exists ghostty; then
 else
   echo "❌ Ghostty is not installed. This is the preferred terminal."
   echo "   - See installation instructions at https://github.com/ghostty-org/ghostty"
+fi
+
+if exists tmux; then
+  if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    echo "❌ Tmux Plugin Manager is not installed. Installing..."
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    echo "✅ Tmux Plugin Manager installed."
+    echo "   To install plugins, start tmux and press 'prefix + I'."
+  else
+    echo "✅ Tmux Plugin Manager is already installed."
+  fi
 fi
 
 # --- Font Installation ---
