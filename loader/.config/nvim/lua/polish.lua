@@ -2,6 +2,15 @@
 -- This is just pure lua so anything that doesn't
 -- fit in the normal config locations above can go here
 
+vim.opt.list = true
+vim.opt.listchars = {
+  tab = "» ",
+  trail = "·",
+  extends = "⟩",
+  precedes = "⟨",
+  nbsp = "␣",
+}
+
 -- Create an augroup for autocmds
 local autocmd_group = vim.api.nvim_create_augroup("CustomFileActions", { clear = true })
 
