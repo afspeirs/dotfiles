@@ -25,8 +25,15 @@ function install_package() {
     fedora)
       sudo dnf install -y "$pkg"
       ;;
-    arch)
-      sudo pacman -Sy "$pkg"
+    arch|steamos)
+      if ! command -v yay >/dev/null 2>&1; then
+        echo "Installing yay..."
+        sudo pacman -S --needed --noconfirm git base-devel
+        git clone https://aur.archlinux.org/yay.git /tmp/yay
+        (cd /tmp/yay && makepkg -si --noconfirm)
+        rm -rf /tmp/yay
+      fi
+      yay -S --noconfirm "$pkg"
       ;;
     macos)
       brew install "$pkg"
