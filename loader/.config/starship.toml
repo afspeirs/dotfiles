@@ -27,7 +27,7 @@ $cmd_duration\
 $line_break\
 $character"""
 
-palette = 'afspeirs'
+palette = 'catppuccin_mocha'
 
 [os]
 disabled = false
@@ -181,3 +181,15 @@ theme5 = "#15336a"
 red = "#db5a58"
 orange = "#f07000"
 pink = "#d670d6"
+
+[palettes.catppuccin_mocha]
+background = "#121212"
+foreground = "#f5f5f5"
+theme1 = "#fab387" # peach
+theme2 = "#f9e2af" # yellow
+theme3 = "#a6e3a1" # green
+theme4 = "#74c7ec" # sapphire
+theme5 = "#b4befe" # lavender
+red = "#f38ba8"
+orange = "#f2cdcd"
+pink = "#f5c2e7"
