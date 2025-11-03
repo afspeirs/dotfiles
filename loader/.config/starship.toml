@@ -4,6 +4,7 @@ format = """
 [](theme1)\
 $os\
 $username\
+$hostname\
 [](bg:theme2 fg:theme1)\
 $directory\
 [](bg:theme3 fg:theme2)\
@@ -59,6 +60,11 @@ show_always = true
 style_user = "bg:theme1 fg:background"
 style_root = "bg:theme1 fg:background"
 format = '[ $user ]($style)'
+
+[hostname]
+ssh_only = true
+style = "bg:theme1 fg:background"
+format = '[@$hostname ]($style)'
 
 [directory]
 style = "bg:theme2 fg:background"
