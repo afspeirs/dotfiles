@@ -55,15 +55,6 @@ function install_flatpak() {
   fi
 }
 
-# --- Repository Cloning ---
-if [ ! -d "$HOME/dotfiles" ]; then
-  echo "Cloning dotfiles repository..."
-  git clone https://github.com/afspeirs/dotfiles.git "$HOME/dotfiles"
-  cd "$HOME/dotfiles" || exit
-else
-  echo "✅ Dotfiles repository already exists."
-fi
-
 # Function to check if a command exists
 function exists() {
   command -v "$1" >/dev/null 2>&1
@@ -153,10 +144,21 @@ else
   fi
 fi
 echo "Dependency check complete."
+echo ""
+
+# --- Repo Configuration ---
+
+# --- Repository Cloning ---
+if [ ! -d "$HOME/dotfiles" ]; then
+  echo "Cloning dotfiles repository..."
+  git clone https://github.com/afspeirs/dotfiles.git "$HOME/dotfiles"
+  cd "$HOME/dotfiles" || exit
+  echo "✅ Dotfiles repository created."
+else
+  echo "✅ Dotfiles repository already exists."
+fi
 
 # --- Shell Configuration ---
-
-echo "Configuring shell..."
 
 LOADER_SNIPPET='
 # Start dotfiles loader
