@@ -64,7 +64,7 @@ format = '[ $user ]($style)'
 [hostname]
 ssh_only = true
 style = "bg:theme1 fg:background"
-format = '[@$hostname ]($style)'
+format = '[@ $hostname ]($style)'
 
 [directory]
 style = "bg:theme2 fg:background"
