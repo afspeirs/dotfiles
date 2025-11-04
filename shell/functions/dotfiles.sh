@@ -39,7 +39,7 @@ EOF
       ;;
     "stow")
       echo "re-link dotfiles repo files"
-      stow loader
+      stow ~/dotfiles/loader
       ;;
     *)
       echo "🔴 Unknown option: $1"
