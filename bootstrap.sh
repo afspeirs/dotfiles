@@ -72,6 +72,7 @@ packages=(
   starship
   stow
   tmux
+  ydiff
   yt-dlp
 )
 
