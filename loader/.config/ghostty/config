@@ -15,9 +15,10 @@
 background-blur = false
 background-opacity = 0.95
 font-family = Fira Code
+gtk-titlebar-style=tabs
 macos-option-as-alt = true
 theme = Catppuccin Mocha
-window-decoration = auto
+window-decoration = client
 window-padding-color = extend
 window-theme = dark
 
