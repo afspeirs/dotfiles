@@ -37,3 +37,8 @@ if [ -n "$ZSH_VERSION" ]; then
     source <(fzf --zsh)
   fi
 fi
+
+# Check for and source the local override file
+if [ -f "$HOME/.dotfiles_loader.local.sh" ]; then
+  source "$HOME/.dotfiles_loader.local.sh"
+fi

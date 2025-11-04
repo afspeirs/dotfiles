@@ -21,4 +21,4 @@ window-decoration = auto
 window-padding-color = extend
 window-theme = dark
 
-config-file = ?config_mac
+config-file = ?config.local

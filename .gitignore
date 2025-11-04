@@ -1,2 +1,3 @@
 .DS_*
-*_mac
+*.local
+*.local.sh
