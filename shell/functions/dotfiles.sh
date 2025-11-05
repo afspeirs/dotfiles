@@ -42,7 +42,14 @@ EOF
       ;;
     "stow")
       echo "re-link dotfiles repo files"
-      stow ~/dotfiles/loader
+      (
+        # Navigate to the parent directory of the 'loader' package
+        cd ~/dotfiles || { echo "Could not navigate to ~/dotfiles. Aborting stow."; return 1; }
+
+        # Run stow using the package name only.
+        # The -t option specifies the target directory
+        stow loader -t ~
+      )
       ;;
     *)
       echo "🔴 Unknown option: $1"
