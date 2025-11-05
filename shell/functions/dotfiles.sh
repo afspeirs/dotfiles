@@ -23,6 +23,9 @@ EOF
   fi
 
   case "$1" in
+    "bootstrap")
+      ~/dotfiles/bootstrap.sh
+      ;;
     "open")
       if exists code; then
         code ~/dotfiles
