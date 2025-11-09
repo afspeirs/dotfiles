@@ -1,7 +1,7 @@
 return {
-	"shaunsingh/nord.nvim",
+  "shaunsingh/nord.nvim",
   priority = 1,
   config = function()
     vim.cmd.colorscheme "nord"
-  end
+  end,
 }
