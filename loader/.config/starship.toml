@@ -1,16 +1,18 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# --- Prompt Format ---
+
 format = """
-[](theme1)\
+[](theme1background)\
 $os\
 $username\
 $hostname\
-[](bg:theme2 fg:theme1)\
+[](bg:theme2background fg:theme1background)\
 $directory\
-[](bg:theme3 fg:theme2)\
+[](bg:theme3background fg:theme2background)\
 $git_branch\
 $git_status\
-[](fg:theme3 bg:theme4)\
+[](bg:theme4background fg:theme3background)\
 $c\
 $rust\
 $golang\
@@ -20,18 +22,77 @@ $java\
 $kotlin\
 $haskell\
 $python\
-[](fg:theme4 bg:theme5)\
+[](bg:theme5background fg:theme4background)\
 $docker_context\
-[ ](fg:theme5)\
+[ ](fg:theme5background)\
 $cmd_duration\
 $line_break\
-$character"""
+$character
+"""
 
-palette = 'afspeirs'
+# --- Palette ---
+
+palette = "nord"
+
+[palettes.dark_modern]
+background = "#121212"
+foreground = "#f5f5f5"
+theme1background = "#255abb"
+theme1foreground = "#f5f5f5"
+theme2background = "#f5f543"
+theme2foreground = "#121212"
+theme3background = "#f07000"
+theme3foreground = "#121212"
+theme4background = "#417e38"
+theme4foreground = "#f5f5f5"
+theme5background = "#29b8db"
+theme5foreground = "#f5f5f5"
+red = "#db5a58"
+orange = "#f07000"
+pink = "#d670d6"
+green = "#417e38"
+
+[palettes.afspeirs]
+background = "#121212"
+foreground = "#f5f5f5"
+theme1background = "#dbe6f8"
+theme1foreground = "#121212"
+theme2background = "#95b3ea"
+theme2foreground = "#121212"
+theme3background = "#4e80dc"
+theme3foreground = "#f5f5f5"
+theme4background = "#255abb"
+theme4foreground = "#f5f5f5"
+theme5background = "#15336a"
+theme5foreground = "#f5f5f5"
+red = "#db5a58"
+orange = "#f07000"
+pink = "#d670d6"
+green = "#255abb"
+
+[palettes.nord]
+background = "#2E3440" # nord0
+foreground = "#ECEFF4" # nord6
+theme1background = "#81A1C1" # nord9
+theme1foreground = "#2E3440" # nord0
+theme2background = "#5E81AC" # nord10
+theme2foreground = "#2E3440" # nord0
+theme3background = "#4C566A" # nord3
+theme3foreground = "#ECEFF4" # nord6
+theme4background = "#3B4252" # nord1
+theme4foreground = "#ECEFF4" # nord6
+theme5background = "#434C5E" # nord2
+theme5foreground = "#ECEFF4" # nord6
+red = "#BF616A" # nord11
+orange = "#D08770" # nord12
+pink = "#B48EAD" # nord15
+green = "#A3BE8C" # nord14
+
+# --- Modules ---
 
 [os]
 disabled = false
-style = "bg:theme1 fg:background"
+style = "bg:theme1background fg:theme1foreground"
 
 [os.symbols]
 Windows = ""
@@ -57,17 +118,17 @@ RedHatEnterprise = "󱄛"
 
 [username]
 show_always = true
-style_user = "bg:theme1 fg:background"
-style_root = "bg:theme1 fg:background"
+style_user = "bg:theme1background fg:theme1foreground"
+style_root = "bg:theme1background fg:theme1foreground"
 format = '[ $user ]($style)'
 
 [hostname]
 ssh_only = true
-style = "bg:theme1 fg:background"
+style = "bg:theme1background fg:theme1foreground"
 format = '[@ $hostname ]($style)'
 
 [directory]
-style = "bg:theme2 fg:background"
+style = "bg:theme2background fg:theme2foreground"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -81,62 +142,62 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:theme3"
-format = '[[ $symbol $branch ](fg:background bg:theme3)]($style)'
+style = "bg:theme3background"
+format = '[[ $symbol $branch ](fg:theme3foreground bg:theme3background)]($style)'
 
 [git_status]
-style = "bg:theme3"
-format = '[[($all_status$ahead_behind )](fg:background bg:theme3)]($style)'
+style = "bg:theme3background"
+format = '[[($all_status$ahead_behind )](fg:theme3foreground bg:theme3background)]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:theme4"
-format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [c]
 symbol = " "
-style = "bg:theme4"
-format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [rust]
 symbol = ""
-style = "bg:theme4"
-format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [golang]
 symbol = ""
-style = "bg:theme4"
-format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [php]
 symbol = ""
-style = "bg:theme4"
-format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [java]
 symbol = " "
-style = "bg:theme4"
-format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [kotlin]
 symbol = ""
-style = "bg:theme4"
-format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [haskell]
 symbol = ""
-style = "bg:theme4"
-format = '[[ $symbol( $version) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [python]
 symbol = ""
-style = "bg:theme4"
-format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:background bg:theme4)]($style)'
+style = "bg:theme4background"
+format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:theme4foreground bg:theme4background)]($style)'
 
 [docker_context]
 symbol = ""
-style = "bg:theme5"
-format = '[[ $symbol( $context) ](fg:background bg:theme5)]($style)'
+style = "bg:theme5background"
+format = '[[ $symbol( $context) ](fg:theme5foreground bg:theme5background)]($style)'
 
 [line_break]
 disabled = false
@@ -157,39 +218,3 @@ style = "bg:pink"
 disabled = false
 show_notifications = true
 min_time_to_notify = 45000
-
-[palettes.dark_modern]
-background = "#121212"
-foreground = "#f5f5f5"
-theme1 = "#255abb"
-theme2 = "#f5f543"
-theme3 = "#f07000"
-theme4 = "#417e38"
-theme5 = "#29b8db"
-red = "#db5a58"
-orange = "#f07000"
-pink = "#d670d6"
-
-[palettes.afspeirs]
-background = "#121212"
-foreground = "#f5f5f5"
-theme1 = "#dbe6f8"
-theme2 = "#95b3ea"
-theme3 = "#4e80dc"
-theme4 = "#255abb"
-theme5 = "#15336a"
-red = "#db5a58"
-orange = "#f07000"
-pink = "#d670d6"
-
-[palettes.catppuccin_mocha]
-background = "#121212"
-foreground = "#f5f5f5"
-theme1 = "#fab387" # peach
-theme2 = "#f9e2af" # yellow
-theme3 = "#a6e3a1" # green
-theme4 = "#74c7ec" # sapphire
-theme5 = "#b4befe" # lavender
-red = "#f38ba8"
-orange = "#f2cdcd"
-pink = "#f5c2e7"
