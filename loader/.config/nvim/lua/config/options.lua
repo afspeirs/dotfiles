@@ -1,6 +1,8 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
+
+-- Show trailing characters
 vim.opt.list = true
 vim.opt.listchars = {
   tab = "» ",
@@ -9,6 +11,10 @@ vim.opt.listchars = {
   precedes = "⟨",
   nbsp = "␣",
 }
+
+-- Disable format on save
+-- Undo LazyVim default: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua#L6
+vim.g.autoformat = false
 
 -- Create an augroup for autocmds
 local autocmd_group = vim.api.nvim_create_augroup("CustomFileActions", { clear = true })
