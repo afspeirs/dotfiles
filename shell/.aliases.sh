@@ -3,6 +3,11 @@ alias edit=nvim
 # Find and delete all .DS_Store files
 alias delete_ds="find . -name '.DS_Store' -type f -delete"
 
+if exists brew; then
+  # Start the mysql service
+  alias mysql_start="brew services start mysql"
+fi
+
 if exists docker; then
   # Prune all unused docker objects
   alias docker_prune="docker system prune -a --volumes"
@@ -19,7 +24,7 @@ if exists lazygit; then
   alias lg="lazygit"
 fi
 
-if exists brew; then
-  # Start the mysql service
-  alias mysql_start="brew services start mysql"
+if exists tmux; then
+  alias t="tmux"
+  alias ta="tmux a"
 fi
