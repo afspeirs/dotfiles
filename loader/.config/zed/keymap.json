@@ -24,12 +24,15 @@
   {
     "context": "Workspace",
     "bindings": {
+      "shift shift": "file_finder::Toggle",
       "f1": "command_palette::Toggle",
-      "ctrl-§": "terminal_panel::Toggle",
-      "alt-cmd-b": "workspace::ToggleLeftDock",
+      "cmd-alt-b": "workspace::ToggleLeftDock",
       "cmd-b": "workspace::ToggleRightDock",
       "cmd-e": "project_panel::ToggleFocus",
       "cmd-g": "git_panel::ToggleFocus",
+      "ctrl-alt-b": "workspace::ToggleLeftDock",
+      "ctrl-b": "workspace::ToggleRightDock",
+      "ctrl-§": "terminal_panel::Toggle",
     },
   },
 ]
