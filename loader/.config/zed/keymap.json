@@ -7,33 +7,29 @@
 // from the command palette.
 [
   {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-u": "editor::ConvertToUpperCase",
+      "ctrl-shift-l": "editor::ConvertToLowerCase",
+      "ctrl-shift-o": "editor::OrganizeImports",
+    },
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-enter": "workspace::ZoomIn",
+      "cmd-shift-enter": "workspace::ZoomOut",
+    },
+  },
+  {
     "context": "Workspace",
     "bindings": {
+      "f1": "command_palette::Toggle",
       "ctrl-§": "terminal_panel::Toggle",
-    },
-  },
-  {
-    "context": "Workspace",
-    "bindings": {
       "alt-cmd-b": "workspace::ToggleLeftDock",
-    },
-  },
-  {
-    "context": "Workspace",
-    "bindings": {
       "cmd-b": "workspace::ToggleRightDock",
-    },
-  },
-  {
-    "context": "Workspace",
-    "bindings": {
+      "cmd-e": "project_panel::ToggleFocus",
       "cmd-g": "git_panel::ToggleFocus",
     },
   },
-  {
-    "context": "Workspace",
-    "bindings": {
-      "cmd-e": "project_panel::ToggleFocus"
-    }
-  }
 ]

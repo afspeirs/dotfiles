@@ -7,6 +7,16 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
+  "diff_view_style": "split",
+  "git": {
+    "path_style": "file_path_first",
+    "hunk_style": "unstaged_hollow"
+  },
   "title_bar": {
     "show_menus": false,
     "show_user_picture": true,
@@ -29,7 +39,7 @@
   "gutter": {
     "min_line_number_digits": 2
   },
-  "relative_line_numbers": "enabled",
+  "relative_line_numbers": "disabled",
   "sticky_scroll": {
     "enabled": true
   },
@@ -59,7 +69,7 @@
     "sort_by_path": true,
     "collapse_untracked_diff": false,
     "status_style": "label_color",
-    "tree_view": true,
+    "tree_view": false,
     "dock": "right",
   },
   "outline_panel": {
