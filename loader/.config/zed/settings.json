@@ -112,7 +112,7 @@
   },
   "cursor_blink": true,
   "buffer_font_fallbacks": ["FiraCode Nerd Font"],
-  "buffer_font_family": "FiraMono Nerd Font",
+  "buffer_font_family": "FiraCode Nerd Font",
   "file_types": {
     "tailwindcss": ["*.css"],
     "editorconfig": ["*.toml"],
