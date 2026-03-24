@@ -15,6 +15,13 @@
     },
   },
   {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-shift-tab": "pane::ActivatePreviousItem",
+      "ctrl-tab": "pane::ActivateNextItem",
+    }
+  },
+  {
     "context": "Terminal",
     "bindings": {
       "cmd-enter": "workspace::ZoomIn",
@@ -28,10 +35,11 @@
       "f1": "command_palette::Toggle",
       "cmd-alt-b": "workspace::ToggleLeftDock",
       "cmd-b": "workspace::ToggleRightDock",
-      "cmd-e": "project_panel::ToggleFocus",
-      "cmd-g": "git_panel::ToggleFocus",
+      "cmd-shift-g": "git_panel::ToggleFocus",
+      "ctrl-shift-g": "git_panel::ToggleFocus",
       "ctrl-alt-b": "workspace::ToggleLeftDock",
       "ctrl-b": "workspace::ToggleRightDock",
+      "ctrl-g ctrl-g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
       "ctrl-§": "terminal_panel::Toggle",
     },
   },
