@@ -11,7 +11,6 @@
     "bindings": {
       "ctrl-shift-u": "editor::ConvertToUpperCase",
       "ctrl-shift-l": "editor::ConvertToLowerCase",
-      "ctrl-shift-o": "editor::OrganizeImports",
     },
   },
   {
@@ -39,7 +38,8 @@
       "ctrl-shift-g": "git_panel::ToggleFocus",
       "ctrl-alt-b": "workspace::ToggleLeftDock",
       "ctrl-b": "workspace::ToggleRightDock",
-      "ctrl-g ctrl-g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
+      "ctrl-g ctrl-g": "git_graph::Open",
+      "ctrl-l ctrl-g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
       "ctrl-§": "terminal_panel::Toggle",
     },
   },
