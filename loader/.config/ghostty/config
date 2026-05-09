@@ -15,10 +15,10 @@
 background-blur = false
 background-opacity = 0.95
 font-family = Fira Code
-gtk-titlebar-style=tabs
+# gtk-titlebar-style=tabs
 macos-option-as-alt = true
 theme = Nord
-window-decoration = client
+# window-decoration = client
 window-padding-color = extend
 window-theme = dark
 

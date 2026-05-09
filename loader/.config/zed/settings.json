@@ -74,7 +74,7 @@
   "gutter": {
     "min_line_number_digits": 2
   },
-  "icon_theme": "Zed (Default)",
+  "icon_theme": "Colored Zed Icons Theme Dark",
   "inlay_hints": {
     "show_value_hints": true,
     "enabled": true
@@ -130,7 +130,7 @@
   },
   "theme": "Nord Dark",
   "title_bar": {
-    "show_branch_icon": true,
+    "show_branch_status_icon": true,
     "show_menus": false,
     "show_project_items": true,
     "show_sign_in": true,
