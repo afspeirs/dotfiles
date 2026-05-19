@@ -101,6 +101,7 @@
     "hide_hidden": false
   },
   "relative_line_numbers": "disabled",
+  "resize_all_panels_in_dock": ["left", "bottom", "right"],
   "search_wrap": false,
   "show_completion_documentation": true,
   "show_whitespaces": "boundary",
