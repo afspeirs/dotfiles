@@ -20,7 +20,7 @@
     "FiraCode Nerd Font"
   ],
   "buffer_font_family": "FiraCode Nerd Font",
-  "buffer_font_size": 16.0,
+  "buffer_font_size": 15.0,
   "buffer_line_height": "comfortable",
   "collaboration_panel": {
     "dock": "left"
@@ -50,19 +50,32 @@
     "editorconfig": [
       "*.toml"
     ],
+    "HTML": [
+      "*.hbs"
+    ],
     "properties": [
       "*.env"
     ],
     "tailwindcss": [
       "*.css"
-    ]
+    ],
   },
   "format_on_save": "off",
   "git": {
+    "branch_picker": {
+      "show_author_name": false
+    },
+    "blame": {
+      "show_avatar": true
+    },
+    "inline_blame": {
+      "show_commit_summary": true
+    },
     "hunk_style": "unstaged_hollow",
     "path_style": "file_path_first"
   },
   "git_panel": {
+    "commit_title_max_length": 50,
     "collapse_untracked_diff": false,
     "default_width": 240.0,
     "diff_stats": true,
@@ -80,6 +93,74 @@
     "enabled": true
   },
   "inline_code_actions": true,
+  "languages": {
+    "CSS": {
+      "language_servers": [
+        "tailwindcss-intellisense-css",
+        "!vscode-css-language-server",
+      ]
+    }
+  },
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        // For JavaScript:
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          },
+          "inlayHints": {
+            "parameterNames": {
+              "enabled": false,
+            },
+            "parameterTypes": {
+              "enabled": false
+            },
+            "variableTypes": {
+              "enabled": false,
+              "suppressWhenTypeMatchesName": true
+            },
+            "propertyDeclarationTypes": {
+              "enabled": false
+            },
+            "functionLikeReturnTypes": {
+              "enabled": false
+            },
+            "enumMemberValues": {
+              "enabled": false
+            }
+          }
+        },
+        // For TypeScript:
+        "typescript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          },
+          "inlayHints": {
+            "parameterNames": {
+              "enabled": false,
+            },
+            "parameterTypes": {
+              "enabled": false
+            },
+            "variableTypes": {
+              "enabled": false,
+              "suppressWhenTypeMatchesName": false
+            },
+            "propertyDeclarationTypes": {
+              "enabled": false
+            },
+            "functionLikeReturnTypes": {
+              "enabled": false
+            },
+            "enumMemberValues": {
+              "enabled": false
+            }
+          }
+        }
+      }
+    }
+  },
   "minimap": {
     "display_in": "active_editor",
     "show": "auto",
@@ -127,7 +208,9 @@
     "font_fallbacks": [
       "FiraCode Nerd Font"
     ],
-    "font_family": "FiraCode Nerd Font Mono"
+    "font_family": "FiraCode Nerd Font Mono",
+    "font_size": 13,
+    "line_height": "comfortable"
   },
   "theme": "Nord Dark",
   "title_bar": {
@@ -138,7 +221,8 @@
     "show_user_menu": true,
     "show_user_picture": true
   },
-  "ui_font_size": 16,
+  "ui_font_family": "FiraCode Nerd Font",
+  "ui_font_size": 15.0,
   "unnecessary_code_fade": 0.4,
   "vim": {
     "toggle_relative_line_numbers": true
