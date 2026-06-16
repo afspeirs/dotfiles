@@ -32,15 +32,18 @@
     "bindings": {
       "shift shift": "file_finder::Toggle",
       "f1": "command_palette::Toggle",
-      "cmd-alt-b": "workspace::ToggleLeftDock",
-      "cmd-b": "workspace::ToggleRightDock",
-      "cmd-shift-g": "git_panel::ToggleFocus",
-      "ctrl-shift-g": "git_panel::ToggleFocus",
-      "ctrl-alt-b": "workspace::ToggleLeftDock",
-      "ctrl-b": "workspace::ToggleRightDock",
-      "ctrl-g ctrl-g": "git_graph::Open",
-      "ctrl-l ctrl-g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
+      // dock
+      "secondary-alt-b": "workspace::ToggleLeftDock",
+      "secondary-b": "workspace::ToggleRightDock",
+      // panels
+      "ctrl-alt-a": "agent::Toggle",
+      "ctrl-alt-e": "project_panel::Toggle",
+      "ctrl-alt-g": "git_panel::Toggle",
+      "ctrl-alt-t": "terminal_panel::Toggle",
       "ctrl-§": "terminal_panel::Toggle",
+      // git
+      "ctrl-g ctrl-g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
+      "ctrl-g ctrl-t": "git_graph::Open",
     },
   },
 ]
