@@ -8,12 +8,7 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "agent": {
-    "show_turn_stats": false,
     "use_modifier_to_send": true,
-    "single_file_review": false,
-    "dock": "left",
-    "favorite_models": [],
-    "model_parameters": []
   },
   "base_keymap": "VSCode",
   "buffer_font_fallbacks": [
@@ -22,6 +17,7 @@
   "buffer_font_family": "FiraCode Nerd Font",
   "buffer_font_size": 15.0,
   "buffer_line_height": "comfortable",
+  "cli_default_open_behavior": "new_window",
   "collaboration_panel": {
     "dock": "left"
   },
@@ -30,6 +26,7 @@
   "debugger": {
     "dock": "right"
   },
+  "default_open_behavior": "new_window",
   "diagnostics": {
     "inline": {
       "enabled": true
@@ -58,7 +55,7 @@
     ],
     "tailwindcss": [
       "*.css"
-    ],
+    ]
   },
   "format_on_save": "off",
   "git": {
@@ -75,6 +72,8 @@
     "path_style": "file_path_first"
   },
   "git_panel": {
+    "sort_by": "path",
+    "group_by": "none",
     "commit_title_max_length": 50,
     "collapse_untracked_diff": false,
     "default_width": 240.0,
