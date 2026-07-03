@@ -1,18 +1,18 @@
-function ip() {
+function ip_easy() {
   if [ "$#" -eq 0 ] || [ "$1" = "-h" ]; then
     cat <<'EOF'
 Display various IP addresses.
 
 Usage:
-  $ ip local            # Display local private IPv4 address
-  $ ip public           # Display public IPv4 address
-  $ ip <interface>      # Display IPv4 address of a specific interface
-  $ ip -h               # Show this help message
+  $ ip_easy local            # Display local private IPv4 address
+  $ ip_easy public           # Display public IPv4 address
+  $ ip_easy <interface>      # Display IPv4 address of a specific interface
+  $ ip_easy -h               # Show this help message
 
 Examples:
-  $ ip local
-  $ ip public
-  $ ip eth0
+  $ ip_easy local
+  $ ip_easy public
+  $ ip_easy eth0
 EOF
     return 0
   fi
@@ -37,7 +37,7 @@ EOF
         ifconfig "$arg" | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
       else
         echo "🔴 Error: Invalid argument or interface: $arg"
-        echo "   Run 'ip -h' for usage."
+        echo "   Run 'ip_easy -h' for usage."
         return 1
       fi
       ;;
