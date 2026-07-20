@@ -85,12 +85,18 @@ for pkg in "${packages[@]}"; do
   fi
 done
 
-# Ghostty (custom install)
 if exists ghostty; then
   echo "✅ Ghostty is installed."
 else
-  echo "❌ Ghostty is not installed. This is the preferred terminal."
+  echo "❌ Ghostty is not installed."
   echo "   - See installation instructions at https://github.com/ghostty-org/ghostty"
+fi
+
+if exists lazygit; then
+  echo "✅ lazygit is installed."
+else
+  echo "❌ lazygit is not installed."
+  echo "   - See installation instructions at https://github.com/jesseduffield/lazygit#installation"
 fi
 
 if exists tmux; then
@@ -100,7 +106,7 @@ if exists tmux; then
     echo "✅ Tmux Plugin Manager installed."
     echo "   To install plugins, start tmux and press 'prefix + I'."
   else
-    echo "✅ Tmux Plugin Manager is already installed."
+    echo "✅ Tmux Plugin Manager is installed."
   fi
 fi
 
@@ -118,7 +124,7 @@ else
 fi
 
 if [ "$font_installed" = true ]; then
-  echo "✅ Fira Code Nerd Font is already installed."
+  echo "✅ Fira Code Nerd Font is installed."
 else
   echo "❌ Fira Code Nerd Font is not installed."
   read -p "   Would you like to download it now? (y/N): " install_font
