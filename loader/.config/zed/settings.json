@@ -201,6 +201,7 @@
     "show_diagnostics": "errors"
   },
   "terminal": {
+    "show_count_badge": true,
     "blinking": "on",
     "copy_on_select": true,
     "dock": "bottom",

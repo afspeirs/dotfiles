@@ -42,8 +42,8 @@
       "ctrl-alt-t": "terminal_panel::Toggle",
       "ctrl-§": "terminal_panel::Toggle",
       // git
-      "ctrl-g ctrl-g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
-      "ctrl-g ctrl-t": "git_graph::Open",
+      "ctrl-g ctrl-g": "git_graph::Open",
+      "ctrl-l ctrl-g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
     },
   },
 ]
