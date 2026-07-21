@@ -20,7 +20,7 @@ return {
     -- Open Buffers
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Find Open Buffers" },
     -- LazyGit
-    { "<leader>g", function() Snacks.lazygit() end, desc = "LazyGit" },
+    { "<leader>gg", function() Snacks.lazygit() end, desc = "LazyGit" },
     -- Open active file on GitHub
     -- { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse (GitHub)" },
   },
