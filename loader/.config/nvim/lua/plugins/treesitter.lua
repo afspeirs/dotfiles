@@ -1,9 +1,9 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  branch = "master",
+  branch = "main",
   build = ":TSUpdate",
   config = function()
-    require("nvim-treesitter.configs").setup({
+    require("nvim-treesitter.config").setup({
       ensure_installed = {
         "javascript",
         "typescript",
@@ -15,7 +15,8 @@ return {
         "markdown_inline",
         "lua",
         "vim",
-        "json"
+        "json",
+        "jsonc"
       },
       auto_install = true,
       highlight = {
