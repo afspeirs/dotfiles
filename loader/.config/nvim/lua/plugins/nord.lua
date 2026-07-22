@@ -1,15 +1,13 @@
--- Nord Color Scheme
 return {
   "gbprod/nord.nvim",
-  lazy = false,       -- Load immediately on startup
-  priority = 1000,    -- High priority to apply colors before other plugins
+  lazy = false,
+  priority = 1000,
   config = function()
     require("nord").setup({
-      transparent = true, -- Set to true if you want your terminal's transparent background
+      transparent = true,
       terminal_colors = true,
-      borders = true,      -- Border line between vertical splits
+      borders = true,
     })
-    vim.cmd.colorscheme("nord") -- Apply Nord
+    vim.cmd.colorscheme("nord")
   end,
 }
-
