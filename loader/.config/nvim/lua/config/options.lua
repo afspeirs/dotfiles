@@ -23,7 +23,15 @@ opt.scrolloff = 8             -- Keep 8 lines above/below cursor when scrolling
 opt.splitright = true         -- Vertical splits open to the right
 opt.splitbelow = true         -- Horizontal splits open below
 
-opt.fixeol = true             -- Ensure file ends with a single newline
+-- Show trailing characters
+opt.list = true
+opt.listchars = {
+  tab = "» ",
+  trail = "·",
+  extends = "⟩",
+  precedes = "⟨",
+  nbsp = "␣",
+}
 
 -- Ensure file ends with a single newline
 opt.fixeol = true
