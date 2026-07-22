@@ -6,6 +6,8 @@ opt.relativenumber = true     -- Relative line numbers for quick jumping
 opt.cursorline = true         -- Highlight current line
 opt.termguicolors = true      -- True color support
 opt.signcolumn = "yes"        -- Always show sign column (prevents shift when LSP loads)
+vim.opt.cmdheight = 0         -- Hide the bottom command line until typing a command
+vim.opt.showmode = false      -- Hide default mode message (handled by lualine plugin)
 
 -- Tabs & Indentation (2 spaces for Web Dev standard)
 opt.tabstop = 2
