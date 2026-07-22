@@ -4,7 +4,7 @@ return {
   lazy = false,
   opts = {
     picker    = { enabled = true },
-    lazygit   = { enabled = true },
+    lazygit   = { enabled = true, win = { width = 0, height = 0 } },
     dashboard = { enabled = true },
     bigfile   = { enabled = true },
     indent    = { enabled = true },
@@ -25,4 +25,3 @@ return {
     -- { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse (GitHub)" },
   },
 }
-
