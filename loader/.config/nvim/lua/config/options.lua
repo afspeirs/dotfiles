@@ -35,14 +35,17 @@ opt.listchars = {
 
 -- Ensure file ends with a single newline
 opt.fixeol = true
--- Trim trailing whitespace
+local clean_on_save = vim.api.nvim_create_augroup("CleanOnSave", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
+  group = clean_on_save,
   pattern = "*",
+  desc = "Trim trailing whitespace and trailing blank lines on save",
   callback = function()
-    -- trailing whitespace on lines
-    vim.cmd([[%s/\s\+$//e]])
-    -- trailing blank lines → single newline
-    vim.cmd([[%s/\(\n\n\)\+\%$/\r/e]])
+    local save = vim.fn.winsaveview() -- Save view/cursor position so the screen doesn't jump on save
+
+    vim.cmd([[keeppatterns %s/\s\+$//e]]) -- Trim trailing whitespace at the end of lines
+    vim.cmd([[keeppatterns %s/\n\+\%$//e]]) -- Remove all trailing blank lines at the end of the file
+
+    vim.fn.winrestview(save) -- Restore cursor position
   end,
-  desc = "Trim trailing whitespace and ensure final newline on save",
 })
