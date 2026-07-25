@@ -22,6 +22,9 @@ mouse-hide-while-typing = true
 theme = Nord
 # window-decoration = client
 window-padding-color = extend
+window-padding-x = 0
+window-padding-y = 0
+window-step-resize = true
 window-theme = dark
 
 config-file = ?config.local
