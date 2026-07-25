@@ -10,9 +10,6 @@ map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
--- File Explorer
-map("n", "<leader>e", "<cmd>Explore<CR>", { desc = "Open File Explorer" })
-
 -- Stay in visual mode when indenting text
 map("v", "<", "<gv", { desc = "Indent left" })
 map("v", ">", ">gv", { desc = "Indent right" })
