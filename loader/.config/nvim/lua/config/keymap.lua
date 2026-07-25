@@ -19,7 +19,6 @@ map("v", ">", ">gv", { desc = "Indent right" })
 
 -- Toggle Comment Line (Normal Mode)
 map("n", "<leader>/", "gcc", { remap = true, desc = "Toggle Comment Line" })
-
 -- Toggle Comment Selection (Visual Mode)
 map("v", "<leader>/", "gc", { remap = true, desc = "Toggle Comment Selection" })
 
@@ -36,10 +35,10 @@ map("v", "<leader>su", ":sort u<CR>", { desc = "Sort unique lines" })
 map("v", "<leader>sn", ":sort n<CR>", { desc = "Sort lines numerically" })
 
 -- Replace word under cursor across the whole file
-map("n", "<leader>rp", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
+map("n", "<leader>cp", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
   desc = "Replace word under cursor in file",
 })
 -- Replace word under cursor in visual selection
-map("v", "<leader>rp", [[:s/\%V//g<Left><Left>]], {
+map("v", "<leader>cp", [[:s/\%V//g<Left><Left>]], {
   desc = "Replace inside visual selection",
 })

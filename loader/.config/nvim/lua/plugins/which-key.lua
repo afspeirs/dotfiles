@@ -5,6 +5,12 @@ return {
     vim.opt.timeout = true
     vim.opt.timeoutlen = 300
   end,
-  opts = {},
+  opts = {
+    spec = {
+      { "<leader>b", group = "Buffers", icon = "󰓩 " },
+      { "<leader>f", group = "Files", icon = "󰍉 " },
+      { "<leader>g", group = "Git", icon = "󰊢 " },
+      { "<leader>c", group = "Code", icon = "󰅩 " },
+    },
+  },
 }
-

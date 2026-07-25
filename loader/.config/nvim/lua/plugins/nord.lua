@@ -4,9 +4,9 @@ return {
   priority = 1000,
   config = function()
     require("nord").setup({
-      transparent = true,
-      terminal_colors = true,
       borders = true,
+      terminal_colors = true,
+      transparent = true,
     })
     vim.cmd.colorscheme("nord")
   end,

@@ -68,7 +68,7 @@ return {
           map("n", "K", vim.lsp.buf.hover, { buffer = buf, desc = "Hover documentation" })
           map("n", "gi", vim.lsp.buf.implementation, { buffer = buf, desc = "Go to implementation" })
           map("n", "gr", vim.lsp.buf.references, { buffer = buf, desc = "Show references" })
-          map("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Rename symbol" })
+          map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = buf, desc = "Rename symbol" })
           map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code action" })
           map("n", "[d", vim.diagnostic.goto_prev, { buffer = buf, desc = "Previous diagnostic" })
           map("n", "]d", vim.diagnostic.goto_next, { buffer = buf, desc = "Next diagnostic" })
