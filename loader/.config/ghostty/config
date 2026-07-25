@@ -13,10 +13,12 @@
 # a full restart to take effect.
 
 background-blur = false
-background-opacity = 0.95
+background-opacity = 0.85
+copy-on-select = true
 font-family = Fira Code
 # gtk-titlebar-style=tabs
 macos-option-as-alt = true
+mouse-hide-while-typing = true
 theme = Nord
 # window-decoration = client
 window-padding-color = extend
