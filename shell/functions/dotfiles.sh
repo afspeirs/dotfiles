@@ -28,11 +28,7 @@ EOF
       ~/dotfiles/bootstrap.sh
       ;;
     "open")
-      if exists zed; then
-        zed ~/dotfiles
-      else
-        cd ~/dotfiles
-      fi
+      project ~/dotfiles
       ;;
     "pull")
       git -C ~/dotfiles pull
