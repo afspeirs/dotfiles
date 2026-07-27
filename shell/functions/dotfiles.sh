@@ -4,10 +4,11 @@ function dotfiles() {
 Manage the dotfiles repository.
 
 Usage:
-  $ dotfiles open            # Open the dotfiles repo in Zed (if available) or navigates to the dotfiles repo
+  $ dotfiles bootstrap       # Run the bootstrap script to set up the repo
+  $ dotfiles open            # Open the dotfiles repo
   $ dotfiles pull            # Pull the latest changes from the dotfiles repo
-  $ dotfiles reload          # Reload the shell
   $ dotfiles stow            # Re-run stow
+  $ dotfiles reload          # Reload the shell
   $ dotfiles -h              # Show this help message
   $ dotfiles                 # Same as -h
 
