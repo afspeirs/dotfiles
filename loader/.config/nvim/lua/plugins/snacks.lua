@@ -5,25 +5,12 @@ return {
   opts = {
     bigfile   = { enabled = true },
     dashboard = { enabled = true },
-    explorer  = { enabled = true, replace_netrw = true },
     indent    = { enabled = true },
     lazygit   = { enabled = true, win = { width = 0, height = 0 } },
     notifier  = { enabled = true },
-    picker = {
-      enabled = true,
-      sources = {
-        explorer = {
-          layout = {
-            layout = {
-              position = "right",
-            },
-          },
-        },
-      },
-    },
+    picker    = { enabled = true },
   },
   keys = {
-    { "<leader>e", function() Snacks.explorer() end, desc = "Toggle Explorer" },
     -- File
     { "<leader><leader>", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
