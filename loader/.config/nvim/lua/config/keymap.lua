@@ -19,13 +19,6 @@ map("n", "<leader>/", "gcc", { remap = true, desc = "Toggle Comment Line" })
 -- Toggle Comment Selection (Visual Mode)
 map("v", "<leader>/", "gc", { remap = true, desc = "Toggle Comment Selection" })
 
--- Move line down/up (Normal Mode)
-map("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
-map("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
--- Move highlighted block down/up and keep selection (Visual Mode)
-map("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move block down" })
-map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move block up" })
-
 -- Sorting Lines
 map("v", "<leader>ss", ":sort<CR>", { desc = "Sort lines" })
 map("v", "<leader>su", ":sort u<CR>", { desc = "Sort unique lines" })

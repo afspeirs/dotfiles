@@ -2,7 +2,10 @@ return {
   'nvim-mini/mini.nvim',
   version = false,
   config = function()
-    require('mini.files').setup({})
+    require('mini.completion').setup()
+    require('mini.files').setup()
+    require('mini.move').setup()
+    require('mini.statusline').setup()
   end,
   keys = {
     { '<leader>e', function() require('mini.files').open() end, desc = 'Explorer' },
