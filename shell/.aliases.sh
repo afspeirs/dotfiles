@@ -30,7 +30,3 @@ if exists tmux; then
   alias t="tmux"
   alias ta="tmux a"
 fi
-
-if exists tmuxinator; then
-  alias mux="tmuxinator"
-fi

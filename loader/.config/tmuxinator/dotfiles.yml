@@ -1,8 +1,0 @@
-name: dotfiles
-root: ~/dotfiles
-
-windows:
-  - editor:
-      panes:
-        - nvim
-  - shell:
