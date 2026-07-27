@@ -1,5 +1,7 @@
 alias edit=nvim
 
+alias d="dotfiles"
+
 # Find and delete all .DS_Store files
 alias delete_ds="find . -name '.DS_Store' -type f -delete"
 
