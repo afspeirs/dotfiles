@@ -5,6 +5,7 @@ return {
     require('mini.completion').setup()
     require('mini.files').setup()
     require('mini.move').setup()
+    require('mini.notify').setup()
     require('mini.statusline').setup()
   end,
   keys = {

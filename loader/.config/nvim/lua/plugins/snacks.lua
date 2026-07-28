@@ -7,7 +7,6 @@ return {
     dashboard = { enabled = true },
     indent    = { enabled = true },
     lazygit   = { enabled = true, win = { width = 0, height = 0 } },
-    notifier  = { enabled = true },
     picker    = { enabled = true },
   },
   keys = {
