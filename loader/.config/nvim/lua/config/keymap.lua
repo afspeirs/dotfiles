@@ -4,11 +4,16 @@ local map = vim.keymap.set
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save File" })
 map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit Neovim" })
 
--- Window Navigation (VS Code / Zed muscle memory)
+-- Window Navigation
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+
+-- Window splitting
+vim.keymap.set("n", "-", "<cmd>split<cr>", { desc = "Horizontal Split" })
+vim.keymap.set("n", "=", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
+vim.keymap.set("n", "<leader><BS>", "<cmd>close<cr>", { desc = "Close current split" })
 
 -- Stay in visual mode when indenting text
 map("v", "<", "<gv", { desc = "Indent left" })
