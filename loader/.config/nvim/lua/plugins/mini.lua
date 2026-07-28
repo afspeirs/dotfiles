@@ -4,9 +4,11 @@ return {
   config = function()
     require('mini.completion').setup()
     require('mini.files').setup()
+    require('mini.icons').setup()
     require('mini.move').setup()
     require('mini.notify').setup()
     require('mini.statusline').setup()
+    require('mini.tabline').setup()
   end,
   keys = {
     { '<leader>e', function() require('mini.files').open() end, desc = 'Explorer' },
