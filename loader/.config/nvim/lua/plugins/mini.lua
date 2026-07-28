@@ -2,6 +2,7 @@ return {
   'nvim-mini/mini.nvim',
   version = false,
   config = function()
+    require('mini.cmdline').setup()
     require('mini.completion').setup()
     require('mini.files').setup()
     require('mini.icons').setup()
