@@ -10,8 +10,9 @@ return {
     require('mini.statusline').setup()
     require('mini.tabline').setup()
   end,
+
   keys = {
     { '<leader>e', function() require('mini.files').open() end, desc = 'Explorer' },
     { '<leader>E', function() require('mini.files').open(vim.api.nvim_buf_get_name(0)) end, desc = 'Explorer (buffer location)' },
-  }
+  },
 }

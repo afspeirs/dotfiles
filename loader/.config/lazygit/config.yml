@@ -5,4 +5,5 @@ git:
     - colorArg: never
       pager: ydiff -p cat -s --wrap --width={{columnWidth}}
 os:
-  editPreset: 'nvim'
+  edit: "nvim {{filename}}"
+  editAtLine: "nvim +{{line}} {{filename}}"
