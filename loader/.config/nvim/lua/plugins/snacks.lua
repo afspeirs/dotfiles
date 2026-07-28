@@ -6,7 +6,6 @@ return {
     bigfile   = { enabled = true },
     dashboard = { enabled = true },
     indent    = { enabled = true },
-    lazygit   = { enabled = true, win = { width = 0, height = 0 } },
     picker    = { enabled = true },
   },
   keys = {
@@ -25,8 +24,5 @@ return {
     { "<leader>bS", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
     { "<leader>bp", "<cmd>bprevious<cr>", desc = "Previous Buffer" },
     { "<leader>bl", "<cmd>bnext<cr>", desc = "Next Buffer" },
-
-    -- Git
-    { "<leader>gg", function() Snacks.lazygit() end, desc = "LazyGit" },
   },
 }
