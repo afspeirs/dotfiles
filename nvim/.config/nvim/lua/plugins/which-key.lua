@@ -11,6 +11,7 @@ return {
       { "<leader>c", group = "Code", icon = "󰅩 " },
       { "<leader>f", group = "Files", icon = "󰍉 " },
       { "<leader>g", group = "Git", icon = "󰊢 " },
+      { "<leader>h", group = "Harpoon", icon = "󰛢 " },
     },
   },
 }
