@@ -5,8 +5,8 @@ set -e
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="$DOTFILES_DIR/.stowed_packages"
 
-# Default Stow flags
-STOW_FLAGS="--restow"
+# Default Stow flags array
+STOW_FLAGS=(--restow)
 DRY_RUN=false
 
 # --- Parse Command-Line Flags ---
@@ -15,7 +15,7 @@ while [[ $# -gt 0 ]]; do
   case $1 in
     -d|--dry-run)
       DRY_RUN=true
-      STOW_FLAGS="-n -v --restow"
+      STOW_FLAGS=(-n -v --restow)
       shift
       ;;
     *)
@@ -58,6 +58,12 @@ exists() {
 
 install_package() {
   pkg="$1"
+
+  # Normalize package names for macOS / Homebrew
+  if [ "$os_type" == "macos" ]; then
+    [[ "$pkg" == "nvim" ]] && pkg="neovim"
+  fi
+
   [ "$DRY_RUN" = true ] && { echo -e "  ${YELLOW}[DRY-RUN] Would install package: $pkg${NC}"; return 0; }
 
   case "$os_type" in
@@ -109,7 +115,6 @@ for pkg in "${AVAILABLE_PACKAGES[@]}"; do
     is_default_yes=false
   fi
 
-  # Explicitly read from /dev/tty so input works inside scripts
   read -p "Stow '$pkg'? $default_prompt: " choice < /dev/tty
 
   case "$choice" in
@@ -134,15 +139,18 @@ fi
 # --- 3. Dependency Check for Selected Packages ---
 echo -e "\n${BLUE}==> Checking dependencies for selected packages...${NC}"
 
-BASE_DEPS=(ffmpeg fzf git ydiff yt-dlp)
-for bin in "${BASE_DEPS[@]}"; do
-  if ! exists "$bin"; then
-    echo -e "  ${YELLOW}Missing base dependency: $bin${NC}"
-    install_package "$bin" || true
-  else
-    echo -e "  ✅ $bin is installed"
-  fi
-done
+# Check base CLI tool dependencies only if 'shell' configuration was selected
+if [[ " ${SELECTED_PACKAGES[*]} " =~ " shell " ]]; then
+  BASE_DEPS=(ffmpeg fzf git ydiff yt-dlp)
+  for bin in "${BASE_DEPS[@]}"; do
+    if ! exists "$bin"; then
+      echo -e "  ${YELLOW}Missing shell dependency: $bin${NC}"
+      install_package "$bin" || true
+    else
+      echo -e "  ✅ $bin is installed"
+    fi
+  done
+fi
 
 declare -A PKG_DEPS=(
   ["ghostty"]="ghostty"
@@ -183,7 +191,7 @@ mkdir -p "$HOME/.config"
 
 for pkg in "${SELECTED_PACKAGES[@]}"; do
   echo -e "${GREEN}Stowing: $pkg${NC}"
-  stow $STOW_FLAGS --target="$HOME" "$pkg"
+  stow "${STOW_FLAGS[@]}" --target="$HOME" "$pkg"
 done
 
 # --- 5. Shell Loader Setup ---
@@ -193,12 +201,8 @@ RC_FILE=""
 
 LOADER_SNIPPET='
 # --- Start Dotfiles Loader ---
-if [[ -d "$HOME/.zshrc.d" ]]; then
-  for file in "$HOME/.zshrc.d"/.*(N) "$HOME/.zshrc.d"/*(N); do
-    [[ -f "$file" ]] && source "$file"
-  done
-  for file in "$HOME/.zshrc.d/functions"/*.zsh(N); do source "$file"; done
-  for file in "$HOME/.zshrc.d/completions"/*.zsh(N); do source "$file"; done
+if [[ -f "$HOME/.zshrc.d/loader.zsh" ]]; then
+  source "$HOME/.zshrc.d/loader.zsh"
 fi
 # --- End Dotfiles Loader ---
 '
