@@ -47,17 +47,17 @@ EOF
       fi
       ;;
     "pull")
-      echo "📥 Pulling latest dotfiles..."
+      echo "Pulling latest dotfiles..."
       git -C "$dotfiles_dir" pull
       ;;
     "reload")
-      echo "🔄 Reloading shell..."
+      echo "Reloading shell..."
       exec "$SHELL"
       ;;
     "stow")
-      echo "🔗 Re-linking dotfiles..."
+      echo "Re-linking dotfiles..."
       (
-        cd "$dotfiles_dir" || { echo "❌ Could not navigate to $dotfiles_dir. Aborting stow."; return 1; }
+        cd "$dotfiles_dir" || { echo "Could not navigate to $dotfiles_dir. Aborting stow."; return 1; }
 
         local config_file="$dotfiles_dir/.stowed_packages"
         local packages=()
@@ -72,7 +72,7 @@ EOF
         fi
 
         if [ ${#packages[@]} -eq 0 ]; then
-          echo "⚠️ No packages found to stow."
+          echo "No packages found to stow."
           return 1
         fi
 
@@ -80,11 +80,11 @@ EOF
           echo "  -> Restowing: $pkg"
           stow --restow --target="$HOME" "$pkg"
         done
-        echo "✅ Stow sync complete."
+        echo "Stow sync complete."
       )
       ;;
     *)
-      echo "🔴 Unknown option: $1"
+      echo "Unknown option: $1"
       echo "   Run 'dotfiles -h' for usage."
       return 1
       ;;
