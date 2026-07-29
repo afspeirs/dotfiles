@@ -9,7 +9,7 @@ opt.signcolumn = "yes"        -- Always show sign column (prevents shift when LS
 vim.opt.cmdheight = 0         -- Hide the bottom command line until typing a command
 vim.opt.showmode = false      -- Hide default mode message (handled by lualine plugin)
 
--- Tabs & Indentation (2 spaces for Web Dev standard)
+-- Tabs & Indentation
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
@@ -20,7 +20,7 @@ opt.ignorecase = true         -- Ignore case in searches...
 opt.smartcase = true          -- ...unless capital letters are typed
 
 -- Quality of Life
-opt.clipboard = "unnamedplus" -- Sync with system clipboard
+opt.clipboard = ""            -- Do not sync with system clipboard
 opt.scrolloff = 8             -- Keep 8 lines above/below cursor when scrolling
 opt.splitright = true         -- Vertical splits open to the right
 opt.splitbelow = true         -- Horizontal splits open below
