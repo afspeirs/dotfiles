@@ -1,3 +1,4 @@
 .DS_*
 *.local
 *.local.*
+.stowed_packages

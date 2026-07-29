@@ -11,8 +11,8 @@ map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
 -- Window splitting
-vim.keymap.set("n", "-", "<cmd>split<cr>", { desc = "Horizontal Split" })
-vim.keymap.set("n", "=", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
+vim.keymap.set("n", "<leader>-", "<cmd>split<cr>", { desc = "Horizontal Split" })
+vim.keymap.set("n", "<leader>=", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 vim.keymap.set("n", "<leader><BS>", "<cmd>close<cr>", { desc = "Close current split" })
 
 -- Stay in visual mode when indenting text

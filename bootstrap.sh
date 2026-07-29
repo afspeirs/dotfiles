@@ -1,9 +1,47 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Bootstrap script for setting up dependencies for the dotfiles repository.
+set -e
 
-# --- OS Detection ---
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_FILE="$DOTFILES_DIR/.stowed_packages"
 
+# Default Stow flags
+STOW_FLAGS="--restow"
+DRY_RUN=false
+
+# --- Parse Command-Line Flags ---
+POSITIONAL_ARGS=()
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -d|--dry-run)
+      DRY_RUN=true
+      STOW_FLAGS="-n -v --restow"
+      shift
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+set -- "${POSITIONAL_ARGS[@]}"
+
+# Colors
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+echo -e "${BLUE}==> Starting Dotfiles Bootstrap...${NC}\n"
+
+if [ "$DRY_RUN" = true ]; then
+  echo -e "${YELLOW}===============================================${NC}"
+  echo -e "${YELLOW}  RUNNING IN DRY-RUN MODE (No changes made)    ${NC}"
+  echo -e "${YELLOW}===============================================${NC}\n"
+fi
+
+# --- 1. OS Detection ---
 os_type=""
 if [ -f /etc/os-release ]; then
   . /etc/os-release
@@ -12,22 +50,21 @@ elif [ "$(uname)" == "Darwin" ]; then
   os_type="macos"
 fi
 
-echo "🧠 Detected OS: $os_type"
+echo -e "🧠 Detected OS: ${GREEN}$os_type${NC}\n"
 
-# --- Install Helper Function ---
+exists() {
+  command -v "$1" >/dev/null 2>&1
+}
 
-function install_package() {
+install_package() {
   pkg="$1"
+  [ "$DRY_RUN" = true ] && { echo -e "  ${YELLOW}[DRY-RUN] Would install package: $pkg${NC}"; return 0; }
+
   case "$os_type" in
-    ubuntu|debian)
-      sudo apt-get update && sudo apt-get install -y "$pkg"
-      ;;
-    fedora)
-      sudo dnf install -y "$pkg"
-      ;;
+    ubuntu|debian) sudo apt-get update && sudo apt-get install -y "$pkg" ;;
+    fedora)        sudo dnf install -y "$pkg" ;;
     arch|steamos)
-      if ! command -v yay >/dev/null 2>&1; then
-        echo "Installing yay..."
+      if ! exists yay; then
         sudo pacman -S --needed --noconfirm git base-devel
         git clone https://aur.archlinux.org/yay.git /tmp/yay
         (cd /tmp/yay && makepkg -si --noconfirm)
@@ -35,163 +72,150 @@ function install_package() {
       fi
       yay -S --noconfirm "$pkg"
       ;;
-    macos)
-      brew install "$pkg"
-      ;;
-    *)
-      echo "⚠️ Unsupported OS. Please install $pkg manually."
-      ;;
+    macos) brew install "$pkg" ;;
+    *)     echo -e "${RED}⚠️ Unsupported OS. Please install $pkg manually.${NC}" ;;
   esac
 }
 
-# --- Flatpak Install Helper ---
+# Ensure GNU Stow is installed first
+if ! exists stow; then
+  echo -e "${YELLOW}GNU Stow not found. Installing...${NC}"
+  install_package stow
+fi
 
-function install_flatpak() {
-  app="$1"
-  if command -v flatpak >/dev/null 2>&1; then
-    flatpak install -y flathub "$app"
+# --- 2. Interactive Package Selection ---
+cd "$DOTFILES_DIR"
+
+PREVIOUS_SELECTIONS=""
+[ -f "$CONFIG_FILE" ] && PREVIOUS_SELECTIONS=$(cat "$CONFIG_FILE")
+
+# Discover all stow package folders (directories that aren't hidden)
+AVAILABLE_PACKAGES=()
+while IFS= read -r dir; do
+  [ -n "$dir" ] && AVAILABLE_PACKAGES+=("$dir")
+done < <(find . -maxdepth 1 -mindepth 1 -type d ! -name '.*' -exec basename {} \;)
+
+SELECTED_PACKAGES=()
+
+echo -e "${BLUE}==> Select configuration packages to Stow:${NC}"
+echo -e "Press ${BLUE}Enter${NC} to accept default, or type ${BLUE}y/n${NC}:\n"
+
+for pkg in "${AVAILABLE_PACKAGES[@]}"; do
+  if echo "$PREVIOUS_SELECTIONS" | grep -qx "$pkg"; then
+    default_prompt="[Y/n]"
+    is_default_yes=true
   else
-    echo "❌ Flatpak is not installed. Cannot install $app via Flatpak."
+    default_prompt="[y/N]"
+    is_default_yes=false
   fi
-}
 
-# Function to check if a command exists
-function exists() {
-  command -v "$1" >/dev/null 2>&1
-}
+  # Explicitly read from /dev/tty so input works inside scripts
+  read -p "Stow '$pkg'? $default_prompt: " choice < /dev/tty
 
-# --- Dependency Checks ---
+  case "$choice" in
+    [Yy]* ) SELECTED_PACKAGES+=("$pkg") ;;
+    [Nn]* ) echo "  Skipping $pkg" ;;
+    "" )
+      if [ "$is_default_yes" = true ]; then
+        SELECTED_PACKAGES+=("$pkg")
+      else
+        echo "  Skipping $pkg"
+      fi
+      ;;
+    * ) echo "  Skipping $pkg" ;;
+  esac
+done
 
-echo "Checking for required dependencies..."
+# Save selection to local config file (only if not dry-run)
+if [ "$DRY_RUN" = false ]; then
+  printf "%s\n" "${SELECTED_PACKAGES[@]}" > "$CONFIG_FILE"
+fi
 
-packages=(
-  ffmpeg
-  fzf
-  git
-  nvim
-  starship
-  stow
-  tmux
-  ydiff
-  yt-dlp
-)
+# --- 3. Dependency Check for Selected Packages ---
+echo -e "\n${BLUE}==> Checking dependencies for selected packages...${NC}"
 
-for pkg in "${packages[@]}"; do
-  if exists "$pkg"; then
-    echo "✅ $pkg is installed."
+BASE_DEPS=(ffmpeg fzf git ydiff yt-dlp)
+for bin in "${BASE_DEPS[@]}"; do
+  if ! exists "$bin"; then
+    echo -e "  ${YELLOW}Missing base dependency: $bin${NC}"
+    install_package "$bin" || true
   else
-    echo "❌ $pkg is not installed. Installing..."
-    install_package "$pkg"
+    echo -e "  ✅ $bin is installed"
   fi
 done
 
-if exists ghostty; then
-  echo "✅ Ghostty is installed."
-else
-  echo "❌ Ghostty is not installed."
-  echo "   - See installation instructions at https://github.com/ghostty-org/ghostty"
-fi
+declare -A PKG_DEPS=(
+  ["ghostty"]="ghostty"
+  ["lazygit"]="lazygit"
+  ["nvim"]="nvim"
+  ["starship"]="starship"
+  ["tmux"]="tmux"
+  ["zed"]="zed"
+)
 
-if exists lazygit; then
-  echo "✅ lazygit is installed."
-else
-  echo "❌ lazygit is not installed."
-  echo "   - See installation instructions at https://github.com/jesseduffield/lazygit#installation"
-fi
-
-if exists tmux; then
-  if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-    echo "❌ Tmux Plugin Manager is not installed. Installing..."
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    echo "✅ Tmux Plugin Manager installed."
-    echo "   To install plugins, start tmux and press 'prefix + I'."
-  else
-    echo "✅ Tmux Plugin Manager is installed."
-  fi
-fi
-
-# --- Font Installation ---
-
-font_installed=false
-if [ "$os_type" == "macos" ]; then
-  if system_profiler SPFontsDataType | grep -q "Fira Code"; then
-    font_installed=true
-  fi
-else
-  if fc-list | grep -q "FiraCode"; then
-    font_installed=true
-  fi
-fi
-
-if [ "$font_installed" = true ]; then
-  echo "✅ Fira Code Nerd Font is installed."
-else
-  echo "❌ Fira Code Nerd Font is not installed."
-  read -p "   Would you like to download it now? (y/N): " install_font
-  if [[ "$install_font" =~ ^[Yy]$ ]]; then
-    if [ "$os_type" == "macos" ]; then
-      FONT_DIR="$HOME/Library/Fonts"
+for pkg in "${SELECTED_PACKAGES[@]}"; do
+  dep="${PKG_DEPS[$pkg]}"
+  if [ -n "$dep" ]; then
+    if exists "$dep"; then
+      echo -e "  ✅ $dep is installed (for $pkg)"
     else
-      FONT_DIR="$HOME/.local/share/fonts"
+      echo -e "  ${YELLOW}❌ $dep missing for $pkg${NC}"
+      install_package "$dep" || true
     fi
+  fi
+done
 
-    echo "Downloading Fira Code Nerd Font..."
-    mkdir -p "$FONT_DIR"
-    curl -L https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz -o /tmp/FiraCode.tar.xz
-    tar -xf /tmp/FiraCode.tar.xz -C "$FONT_DIR"
-    rm /tmp/FiraCode.tar.xz
-
-    if [ "$os_type" != "macos" ]; then
-      fc-cache -fv
+if [[ " ${SELECTED_PACKAGES[*]} " =~ " tmux " ]]; then
+  if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    echo -e "${YELLOW}Installing Tmux Plugin Manager (TPM)...${NC}"
+    if [ "$DRY_RUN" = true ]; then
+      echo -e "  ${YELLOW}[DRY-RUN] Would clone TPM to ~/.tmux/plugins/tpm${NC}"
+    else
+      git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     fi
-
-    echo "✅ Font downloaded and installed."
-  else
-    echo "⏭️ Skipping font installation."
   fi
 fi
-echo "Dependency check complete."
-echo ""
 
-# --- Repo Configuration ---
+# --- 4. Apply Stow Symlinks ---
+echo -e "\n${BLUE}==> Stowing selected packages into $HOME...${NC}"
 
-# --- Repository Cloning ---
-if [ ! -d "$HOME/dotfiles" ]; then
-  echo "Cloning dotfiles repository..."
-  git clone https://github.com/afspeirs/dotfiles.git "$HOME/dotfiles"
-  cd "$HOME/dotfiles" || exit
-  echo "✅ Dotfiles repository created."
-else
-  echo "✅ Dotfiles repository already exists."
-fi
+mkdir -p "$HOME/.config"
 
-# --- Shell Configuration ---
+for pkg in "${SELECTED_PACKAGES[@]}"; do
+  echo -e "${GREEN}Stowing: $pkg${NC}"
+  stow $STOW_FLAGS --target="$HOME" "$pkg"
+done
+
+# --- 5. Shell Loader Setup ---
+RC_FILE=""
+[[ "$SHELL" == *"/bash" ]] && RC_FILE="$HOME/.bashrc"
+[[ "$SHELL" == *"/zsh" ]] && RC_FILE="$HOME/.zshrc"
 
 LOADER_SNIPPET='
-# Start dotfiles loader
-if [ -f "$HOME/.dotfiles_loader.sh" ]; then
-  source "$HOME/.dotfiles_loader.sh"
+# --- Start Dotfiles Loader ---
+if [[ -d "$HOME/.zshrc.d" ]]; then
+  for file in "$HOME/.zshrc.d"/.*(N) "$HOME/.zshrc.d"/*(N); do
+    [[ -f "$file" ]] && source "$file"
+  done
+  for file in "$HOME/.zshrc.d/functions"/*.zsh(N); do source "$file"; done
+  for file in "$HOME/.zshrc.d/completions"/*.zsh(N); do source "$file"; done
 fi
-# End dotfiles loader
+# --- End Dotfiles Loader ---
 '
 
-RC_FILE=""
-if [[ "$SHELL" == *"/bash" ]]; then
-  RC_FILE="$HOME/.bashrc"
-elif [[ "$SHELL" == *"/zsh" ]]; then
-  RC_FILE="$HOME/.zshrc"
+if [ -n "$RC_FILE" ]; then
+  if ! grep -q "Start Dotfiles Loader" "$RC_FILE"; then
+    if [ "$DRY_RUN" = true ]; then
+      echo -e "\n${YELLOW}[DRY-RUN] Would add loader hook to $RC_FILE${NC}"
+    else
+      echo -e "\n${BLUE}Adding ~/.zshrc.d loader hook to $RC_FILE...${NC}"
+      echo -e "$LOADER_SNIPPET" >> "$RC_FILE"
+    fi
+  fi
 fi
 
-if [ -n "$RC_FILE" ]; then
-  if grep -q "# Start dotfiles loader" "$RC_FILE"; then
-    echo "✅ Shell configuration already exists in $RC_FILE."
-  else
-    echo "Adding dotfiles loader to $RC_FILE..."
-    echo -e "$LOADER_SNIPPET" >> "$RC_FILE"
-    echo "✅ Shell configuration updated."
-    echo "   Please restart your shell or run 'source $RC_FILE' to apply the changes."
-  fi
+if [ "$DRY_RUN" = true ]; then
+  echo -e "\n${YELLOW}Dry run complete. No files were modified.${NC}"
 else
-  echo "⚠️ Could not detect shell. Please add the following to your shell configuration file:"
-  echo -e "$LOADER_SNIPPET"
+  echo -e "\n${GREEN}🎉 Bootstrap complete! Your dotfiles are linked and dependencies installed.${NC}"
 fi

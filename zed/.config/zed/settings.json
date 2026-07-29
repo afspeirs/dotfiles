@@ -8,6 +8,11 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "agent": {
+    "default_model": {
+      "provider": "ollama",
+      "model": "gemma4:e2b",
+      "enable_thinking": true
+    },
     "use_modifier_to_send": true,
   },
   "base_keymap": "VSCode",
@@ -55,7 +60,7 @@
     ],
     "tailwindcss": [
       "*.css"
-    ]
+    ],
   },
   "format_on_save": "off",
   "git": {
