@@ -1,58 +1,107 @@
 function project() {
-  if [[ $# -eq 0 ]] || [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
+  if [[ $# -eq 0 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
     cat <<'EOF'
-Create or switch to a tmux session for a project directory.
+Create or switch to a tmux project session.
 
 Usage:
-  $ project <path>
-  $ project -h
+  project <path> [path...]
 
 Examples:
-  $ project .
-  $ project ~/dotfiles
+  project .
+  project ~/dotfiles
 
-Result:
-  Session: <directory-name>
+  project \
+    ~/src/project-name/frontend \
+    ~/src/project-name/backend
 
-  Windows:
-    0: editor   (running nvim)
-    1: terminal
+Behaviour:
+  Single path:
+    - Creates a session named after the repository.
+    - Creates one window.
+    - Starts nvim.
+
+  Multiple paths:
+    - Creates a session named after the parent directory
+      of the first path.
+    - Creates one window per path.
+    - Each window contains:
+        pane 0: nvim
+        pane 1: shell
 
 Notes:
-  - Session names are derived from the directory name.
-  - Existing sessions are reused.
-  - When run inside tmux, the current client switches to the session.
+  - Existing sessions are reused and are not modified.
+  - Session and window names have '.' replaced with '_'.
+  - When run inside tmux, the current client switches
+    to the session.
   - When run outside tmux, it attaches to the session.
 EOF
     return 0
   fi
 
-  local dir
+  local first_dir
   local session
 
-  dir="$(realpath "$1")"
-
-  if [[ ! -d "$dir" ]]; then
-    echo "Not a directory: $dir"
+  if ! first_dir="$(cd "$1" 2>/dev/null && pwd)"; then
+    echo "Not a directory: $1"
     return 1
   fi
 
-  session="$(basename "$dir" | tr '.' '_')"
+  if [[ $# -eq 1 ]]; then
+    session="$(basename "$first_dir")"
+  else
+    session="$(basename "$(dirname "$first_dir")")"
+  fi
+
+  session="${session//./_}"
+
+  local multi_repo=false
+  [[ $# -gt 1 ]] && multi_repo=true
 
   if ! tmux has-session -t "$session" 2>/dev/null; then
-    tmux new-session -d \
-      -s "$session" \
-      -c "$dir" \
-      -n editor
 
-    tmux send-keys \
-      -t "$session":editor \
-      'nvim' C-m
+    local first_window=true
 
-    tmux new-window \
-      -t "$session" \
-      -n shell \
-      -c "$dir"
+    for repo_path in "$@"; do
+      local dir
+      local window
+
+      if ! dir="$(cd "$repo_path" 2>/dev/null && pwd)"; then
+        echo "Not a directory: $repo_path"
+        return 1
+      fi
+
+      window="$(basename "$dir")"
+      window="${window//./_}"
+
+      if $first_window; then
+        tmux new-session \
+          -d \
+          -s "$session" \
+          -n "$window" \
+          -c "$dir" \
+          'nvim'
+
+        first_window=false
+      else
+        tmux new-window \
+          -t "$session" \
+          -n "$window" \
+          -c "$dir" \
+          'nvim'
+      fi
+
+      if $multi_repo; then
+        tmux split-window \
+          -h \
+          -t "$session:$window" \
+          -c "$dir"
+
+        # Focus back on the nvim pane
+        tmux select-pane \
+          -L \
+          -t "$session:$window"
+      fi
+    done
   fi
 
   if [[ -n "$TMUX" ]]; then
@@ -61,3 +110,4 @@ EOF
     tmux attach-session -t "$session"
   fi
 }
+``
