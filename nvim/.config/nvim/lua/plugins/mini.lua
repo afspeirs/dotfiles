@@ -1,6 +1,7 @@
 return {
   'nvim-mini/mini.nvim',
   version = false,
+  lazy = false,
   config = function()
     require('mini.cmdline').setup()
     require('mini.completion').setup()
