@@ -152,17 +152,17 @@ if [[ " ${SELECTED_PACKAGES[*]} " =~ " shell " ]]; then
   done
 fi
 
-declare -A PKG_DEPS=(
-  ["ghostty"]="ghostty"
-  ["lazygit"]="lazygit"
-  ["nvim"]="nvim"
-  ["starship"]="starship"
-  ["tmux"]="tmux"
-  ["zed"]="zed"
-)
-
 for pkg in "${SELECTED_PACKAGES[@]}"; do
-  dep="${PKG_DEPS[$pkg]}"
+  case "$pkg" in
+    ghostty)  dep="ghostty" ;;
+    lazygit)  dep="lazygit" ;;
+    nvim)     dep="nvim" ;;
+    starship) dep="starship" ;;
+    tmux)     dep="tmux" ;;
+    zed)      dep="zed" ;;
+    *)        dep="" ;;
+  esac
+
   if [ -n "$dep" ]; then
     if exists "$dep"; then
       echo -e "  ✅ $dep is installed (for $pkg)"
