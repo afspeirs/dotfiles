@@ -11,6 +11,14 @@ return {
     require('mini.notify').setup()
     require('mini.statusline').setup()
     require('mini.tabline').setup()
+
+    -- Disable mini.completion inside snacks.nvim pickers
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "snacks_picker_input",
+      callback = function()
+        vim.b.minicompletion_disable = true
+      end,
+    })
   end,
 
   keys = {
