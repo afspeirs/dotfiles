@@ -25,8 +25,3 @@ fi
 if exists lazygit; then
   alias lg="lazygit"
 fi
-
-if exists tmux; then
-  alias t="tmux"
-  alias ta="tmux a"
-fi
