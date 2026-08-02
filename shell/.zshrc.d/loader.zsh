@@ -47,3 +47,8 @@ fi
 if [[ -f "$HOME/.dotfiles_loader.local.sh" ]]; then
   source "$HOME/.dotfiles_loader.local.sh"
 fi
+
+# Load OpenCode local override if present on this host
+if [ -f "$HOME/.config/opencode/opencode.local.jsonc" ]; then
+    export OPENCODE_CONFIG="$HOME/.config/opencode/opencode.local.jsonc"
+fi
