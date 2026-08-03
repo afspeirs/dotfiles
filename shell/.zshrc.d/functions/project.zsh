@@ -110,4 +110,3 @@ EOF
     tmux attach-session -t "$session"
   fi
 }
-``
