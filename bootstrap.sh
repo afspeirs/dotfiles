@@ -99,7 +99,7 @@ PREVIOUS_SELECTIONS=""
 AVAILABLE_PACKAGES=()
 while IFS= read -r dir; do
   [ -n "$dir" ] && AVAILABLE_PACKAGES+=("$dir")
-done < <(find . -maxdepth 1 -mindepth 1 -type d ! -name '.*' -exec basename {} \;)
+done < <(find . -maxdepth 1 -mindepth 1 -type d ! -name '.*' -exec basename {} \; | sort)
 
 SELECTED_PACKAGES=()
 
