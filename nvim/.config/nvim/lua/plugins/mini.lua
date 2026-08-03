@@ -14,7 +14,9 @@ return {
     require('mini.tabline').setup()
 
     -- Disable mini.completion inside snacks.nvim pickers
+    local mini_augroup = vim.api.nvim_create_augroup("MiniConfig", { clear = true })
     vim.api.nvim_create_autocmd("FileType", {
+      group = mini_augroup,
       pattern = "snacks_picker_input",
       callback = function()
         vim.b.minicompletion_disable = true
