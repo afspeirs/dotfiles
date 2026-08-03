@@ -5,6 +5,7 @@ return {
   config = function()
     require('mini.cmdline').setup()
     require('mini.completion').setup()
+    require('mini.cursorword').setup()
     require('mini.files').setup()
     require('mini.icons').setup()
     require('mini.move').setup()
