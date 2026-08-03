@@ -6,6 +6,7 @@ return {
     vim.opt.timeoutlen = 300
   end,
   opts = {
+    preset = "helix",
     spec = {
       { "<leader>b", group = "Buffers", icon = "󰓩 " },
       { "<leader>c", group = "Code", icon = "󰅩 " },
