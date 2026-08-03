@@ -71,6 +71,7 @@
       "show_avatar": true
     },
     "inline_blame": {
+      "location": "status_bar",
       "show_commit_summary": true
     },
     "hunk_style": "unstaged_hollow",
@@ -78,7 +79,7 @@
   },
   "git_panel": {
     "sort_by": "path",
-    "group_by": "none",
+    "group_by": "staging",
     "commit_title_max_length": 50,
     "collapse_untracked_diff": false,
     "default_width": 240.0,
