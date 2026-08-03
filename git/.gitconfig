@@ -1,0 +1,10 @@
+[user]
+  email = andrew@speirs.dev
+  name = Andrew Speirs
+[init]
+  defaultBranch = main
+
+[diff]
+  tool = imagediff
+[difftool "imagediff"]
+  cmd = timg -p k --grid=2x1 --title=\"$LOCAL vs $REMOTE\" \"$LOCAL\" \"$REMOTE\"

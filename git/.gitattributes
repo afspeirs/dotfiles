@@ -1,0 +1,5 @@
+*.png diff=imagediff
+*.jpg diff=imagediff
+*.jpeg diff=imagediff
+*.webp diff=imagediff
+*.svg diff=imagediff

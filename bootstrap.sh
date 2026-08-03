@@ -141,7 +141,13 @@ echo -e "\n${BLUE}==> Checking dependencies for selected packages...${NC}"
 
 # Check base CLI tool dependencies only if 'shell' configuration was selected
 if [[ " ${SELECTED_PACKAGES[*]} " =~ " shell " ]]; then
-  BASE_DEPS=(ffmpeg fzf git ydiff yt-dlp)
+  BASE_DEPS=(
+    ffmpeg
+    fzf
+    git
+    ydiff
+    yt-dlp
+  )
   for bin in "${BASE_DEPS[@]}"; do
     if ! exists "$bin"; then
       echo -e "  ${YELLOW}Missing shell dependency: $bin${NC}"
@@ -155,6 +161,7 @@ fi
 for pkg in "${SELECTED_PACKAGES[@]}"; do
   case "$pkg" in
     ghostty)  dep="ghostty" ;;
+    git)      dep="timg" ;;
     lazygit)  dep="lazygit" ;;
     nvim)     dep="nvim" ;;
     starship) dep="starship" ;;
