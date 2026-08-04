@@ -11,7 +11,7 @@
 [diff]
   tool = imagediff
 [difftool "imagediff"]
-  cmd = timg -p k --grid=2x1 --title=\"$LOCAL vs $REMOTE\" \"$LOCAL\" \"$REMOTE\"
+  cmd = LOCAL=\"$LOCAL\" REMOTE=\"$REMOTE\" zsh -ic 'image-diff "$LOCAL" "$REMOTE"'
 
 [include]
   path = ~/.gitconfig.local
