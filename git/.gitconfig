@@ -1,6 +1,10 @@
 [user]
   email = andrew@speirs.dev
   name = Andrew Speirs
+
+[core]
+  editor = nvim
+
 [init]
   defaultBranch = main
 
@@ -8,3 +12,6 @@
   tool = imagediff
 [difftool "imagediff"]
   cmd = timg -p k --grid=2x1 --title=\"$LOCAL vs $REMOTE\" \"$LOCAL\" \"$REMOTE\"
+
+[include]
+  path = ~/.gitconfig.local
