@@ -15,6 +15,9 @@ opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
 
+-- Line wrapping off by default (toggle with <leader>W)
+opt.wrap = false
+
 -- Search settings
 opt.ignorecase = true         -- Ignore case in searches...
 opt.smartcase = true          -- ...unless capital letters are typed

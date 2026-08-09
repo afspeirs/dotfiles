@@ -15,6 +15,13 @@ return {
     { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent Files" },
     { "<leader>fg", function() Snacks.picker.grep() end, desc = "Search Text (Grep)" },
 
+    -- Search
+    { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Search Word", mode = { "n", "x" } },
+
+    -- LSP Symbols
+    { "<leader>cs", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols (buffer)" },
+    { "<leader>cS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+
     -- Buffer
     { "<leader><leader>", function() Snacks.picker.buffers() end, desc = "View Buffers" },
     { "<leader>bb", function() Snacks.picker.buffers() end, desc = "View Buffers" },
