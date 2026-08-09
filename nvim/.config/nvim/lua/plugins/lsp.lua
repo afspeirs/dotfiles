@@ -64,15 +64,17 @@ return {
         callback = function(args)
           local map = vim.keymap.set
           local buf = args.buf
-          map("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
           map("n", "K", vim.lsp.buf.hover, { buffer = buf, desc = "Hover documentation" })
-          map("n", "gi", vim.lsp.buf.implementation, { buffer = buf, desc = "Go to implementation" })
-          map("n", "gr", vim.lsp.buf.references, { buffer = buf, desc = "Show references" })
-          map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = buf, desc = "Rename symbol" })
+          map("n", "<leader>d", vim.diagnostic.open_float, { buffer = buf, desc = "Show line diagnostics" })
           map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code action" })
+          map("n", "<leader>cd", function() Snacks.picker.lsp_definitions() end, { buffer = buf, desc = "Go to definition" })
+          map("n", "<leader>cD", function() Snacks.picker.lsp_declarations() end, { buffer = buf, desc = "Go to declaration" })
+          map("n", "<leader>ci", function() Snacks.picker.lsp_implementations() end, { buffer = buf, desc = "Go to implementation" })
+          map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = buf, desc = "Rename symbol" })
+          map("n", "<leader>cR", function() Snacks.picker.lsp_references() end, { buffer = buf, desc = "Show references" })
+          map("n", "<leader>cy", function() Snacks.picker.lsp_type_definitions() end, { buffer = buf, desc = "Go to type definition" })
           map("n", "[d", vim.diagnostic.goto_prev, { buffer = buf, desc = "Previous diagnostic" })
           map("n", "]d", vim.diagnostic.goto_next, { buffer = buf, desc = "Next diagnostic" })
-          map("n", "<leader>d", vim.diagnostic.open_float, { buffer = buf, desc = "Show line diagnostics" })
         end,
       })
     end,
