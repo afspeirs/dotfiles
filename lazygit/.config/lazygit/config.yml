@@ -4,6 +4,3 @@ git:
   pagers:
     - colorArg: never
       pager: ydiff -p cat -s --wrap --width={{columnWidth}}
-os:
-  edit: "nvim {{filename}}"
-  editAtLine: "nvim +{{line}} {{filename}}"

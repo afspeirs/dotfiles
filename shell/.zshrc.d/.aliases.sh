@@ -1,5 +1,9 @@
 alias edit=nvim
 
+# Default editor
+export EDITOR=nvim
+export VISUAL=nvim
+
 alias d="dotfiles"
 
 # Find and delete all .DS_Store files
