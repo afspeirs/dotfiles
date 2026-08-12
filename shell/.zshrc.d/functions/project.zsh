@@ -14,25 +14,15 @@ Examples:
     ~/src/project-name/frontend \
     ~/src/project-name/backend
 
-Behaviour:
-  Single path:
-    - Creates a session named after the repository.
-    - Creates one window.
-    - Starts nvim.
-
-  Multiple paths:
-    - Creates a session named after the parent directory
-      of the first path.
-    - Creates one window per path.
-    - Each window contains:
-        pane 0: nvim
-        pane 1: shell
+Behaviour for each path:
+  - Creates a session named after the directory (or parent directory for multiple paths).
+  - Creates one window.
+  - Starts nvim.
 
 Notes:
   - Existing sessions are reused and are not modified.
   - Session and window names have '.' replaced with '_'.
-  - When run inside tmux, the current client switches
-    to the session.
+  - When run inside tmux, the current client switches to the session.
   - When run outside tmux, it attaches to the session.
 EOF
     return 0
@@ -53,9 +43,6 @@ EOF
   fi
 
   session="${session//./_}"
-
-  local multi_repo=false
-  [[ $# -gt 1 ]] && multi_repo=true
 
   if ! tmux has-session -t "$session" 2>/dev/null; then
 
@@ -88,18 +75,6 @@ EOF
           -n "$window" \
           -c "$dir" \
           'nvim'
-      fi
-
-      if $multi_repo; then
-        tmux split-window \
-          -h \
-          -t "$session:$window" \
-          -c "$dir"
-
-        # Focus back on the nvim pane
-        tmux select-pane \
-          -L \
-          -t "$session:$window"
       fi
     done
   fi
