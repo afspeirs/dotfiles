@@ -6,7 +6,12 @@ return {
     require('mini.cmdline').setup()
     require('mini.completion').setup()
     require('mini.cursorword').setup()
-    require('mini.files').setup()
+    require('mini.files').setup({
+      windows = {
+        preview = true,
+        width_preview = 80,
+      }
+    })
     require('mini.icons').setup()
     require('mini.move').setup()
     require('mini.notify').setup()
