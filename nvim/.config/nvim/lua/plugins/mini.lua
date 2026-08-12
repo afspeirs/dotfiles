@@ -16,7 +16,6 @@ return {
     require('mini.move').setup()
     require('mini.notify').setup()
     require('mini.statusline').setup()
-    -- require('mini.tabline').setup()
 
     -- Disable mini.completion inside snacks.nvim pickers
     local mini_augroup = vim.api.nvim_create_augroup("MiniConfig", { clear = true })
