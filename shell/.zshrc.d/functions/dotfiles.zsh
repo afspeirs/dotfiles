@@ -16,8 +16,8 @@ Usage:
 
 Aliases:
 $(
-  if [ -f "$dotfiles_dir/.zshrc.d/.aliases.sh" ]; then
-    awk -F'alias ' '/^ *alias / && !/alias edit/ { sub(/=.*/, "", $2); print "  $ " $2 }' "$dotfiles_dir/.zshrc.d/.aliases.sh"
+  if [ -f "$dotfiles_dir/shell/.zshrc.d/.aliases.sh" ]; then
+    awk -F'alias ' '/^ *alias / && !/alias edit/ { sub(/=.*/, "", $2); print "  $ " $2 }' "$dotfiles_dir/shell/.zshrc.d/.aliases.sh"
   elif [ -f "$HOME/.aliases.sh" ]; then
     awk -F'alias ' '/^ *alias / && !/alias edit/ { sub(/=.*/, "", $2); print "  $ " $2 }' "$HOME/.aliases.sh"
   fi
