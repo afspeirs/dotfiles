@@ -7,7 +7,7 @@ export VISUAL=nvim
 alias d="dotfiles"
 
 # Find and delete all .DS_Store files
-alias delete_ds="find . -name '.DS_Store' -type f -delete"
+alias remove_ds="find . -name '.DS_Store' -type f -delete"
 
 if exists brew; then
   # Start the mysql service
