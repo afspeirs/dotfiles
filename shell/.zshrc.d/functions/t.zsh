@@ -15,6 +15,7 @@ Examples:
 Behaviour:
   - Shows sessions in fzf.
   - Includes a [new session] option.
+  - [new session] uses `project .`.
   - Esc cancels without changing sessions.
 
 Notes:
@@ -37,7 +38,7 @@ EOF
   [[ -z "$selected" ]] && return 0
 
   if [[ "$selected" == "[new session]" ]]; then
-    tmux new-session
+    project .
     return
   fi
 
