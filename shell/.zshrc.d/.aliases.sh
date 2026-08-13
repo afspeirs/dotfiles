@@ -5,6 +5,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 alias d="dotfiles"
+alias p="project"
 
 # Find and delete all .DS_Store files
 alias remove_ds="find . -name '.DS_Store' -type f -delete"
