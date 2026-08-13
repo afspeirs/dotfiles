@@ -8,6 +8,13 @@ return {
     indent    = { enabled = true },
     lazygit   = { enabled = true, win = { width = 0, height = 0 } },
     picker    = { enabled = true },
+    styles    = {
+      lazygit = {
+        wo = {
+          winhighlight = "Normal:Normal,NormalFloat:Normal,FloatBorder:FloatBorder",
+        },
+      },
+    },
   },
   keys = {
     -- File
