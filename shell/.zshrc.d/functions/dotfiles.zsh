@@ -59,6 +59,11 @@ EOF
       (
         cd "$dotfiles_dir" || { echo "Could not navigate to $dotfiles_dir. Aborting stow."; return 1; }
 
+        if command -v remove_ds >/dev/null 2>&1; then
+          echo "Cleaning .DS_Store files..."
+          remove_ds
+        fi
+
         local config_file="$dotfiles_dir/.stowed_packages"
         local packages=()
 
