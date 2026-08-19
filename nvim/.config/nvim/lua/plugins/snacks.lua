@@ -19,7 +19,7 @@ return {
   keys = {
     -- File
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
-    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent Files" },
+    { "<leader>fr", function() Snacks.picker.recent({ filter = { cwd = true } }) end, desc = "Recent Files" },
     { "<leader>fg", function() Snacks.picker.grep() end, desc = "Search Text (Grep)" },
 
     -- Search
