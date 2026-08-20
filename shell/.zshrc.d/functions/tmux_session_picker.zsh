@@ -9,7 +9,8 @@ Attach to a tmux session, create a new one, or launch saved projects.
 Usage:
   tmux_session_picker
   tmux_session_picker add <name> <path> [path...]
-  tmux_session_picker rm <name>
+  tmux_session_picker rm [name]
+  tmux_session_picker rm -m
   tmux_session_picker ls
 
 Options:
@@ -20,6 +21,8 @@ Examples:
   tmux_session_picker add dotfiles ~/dotfiles
   tmux_session_picker add acme ~/src/acme/frontend ~/src/acme/backend
   tmux_session_picker rm acme
+  tmux_session_picker rm
+  tmux_session_picker rm -m
   tmux_session_picker ls
 
 Behaviour:
@@ -91,41 +94,86 @@ EOF
       ;;
 
     rm)
-      if [[ $# -ne 2 ]]; then
-        echo "Usage: tmux_session_picker rm <name>"
-        return 1
-      fi
-
-      local name="$2"
-
       if [[ ! -f "$store_file" ]]; then
         echo "No saved entries found."
         return 1
       fi
 
+      local multi=false
+      local -a names_to_remove=()
+
+      if [[ "$2" == "-m" ]]; then
+        if [[ $# -ne 2 ]]; then
+          echo "Usage: tmux_session_picker rm -m"
+          return 1
+        fi
+        multi=true
+      elif [[ $# -eq 2 ]]; then
+        names_to_remove=("$2")
+      elif [[ $# -ne 1 ]]; then
+        echo "Usage: tmux_session_picker rm [name]"
+        return 1
+      fi
+
+      if [[ ${#names_to_remove[@]} -eq 0 ]]; then
+        local selected
+        local -a fzf_args=(--no-sort)
+        $multi && fzf_args+=(--multi)
+
+        selected=$(
+          while IFS= read -r line; do
+            [[ -z "$line" ]] && continue
+            local -a fields=("${(@ps:\t:)line}")
+            printf '%s\n' "${fields[1]}"
+          done < "$store_file" | FZF_DEFAULT_OPTS='' command fzf "${fzf_args[@]}"
+        )
+
+        [[ -z "$selected" ]] && return 0
+
+        if $multi; then
+          names_to_remove=("${(@f)selected}")
+        else
+          names_to_remove=("$selected")
+        fi
+      fi
+
       local tmp
       tmp="$(mktemp)" || return 1
 
-      local removed=false
+      typeset -A remove_lookup
+      local rm_name
+      for rm_name in "${names_to_remove[@]}"; do
+        remove_lookup[$rm_name]=1
+      done
+
+      local -a removed_names=()
       local line
       while IFS= read -r line; do
         [[ -z "$line" ]] && continue
         local -a fields=("${(@ps:\t:)line}")
-        if [[ "${fields[1]}" == "$name" ]]; then
-          removed=true
+        if [[ -n "${remove_lookup[${fields[1]}]}" ]]; then
+          removed_names+=("${fields[1]}")
           continue
         fi
         print -r -- "$line" >> "$tmp"
       done < "$store_file"
 
-      if ! $removed; then
+      if [[ ${#removed_names[@]} -eq 0 ]]; then
         rm -f "$tmp"
-        echo "Saved entry not found: $name"
+        if [[ ${#names_to_remove[@]} -eq 1 ]]; then
+          echo "Saved entry not found: ${names_to_remove[1]}"
+        else
+          echo "No matching saved entries found."
+        fi
         return 1
       fi
 
       mv "$tmp" "$store_file"
-      echo "Removed: $name"
+
+      for rm_name in "${removed_names[@]}"; do
+        echo "Removed: $rm_name"
+      done
+
       return 0
       ;;
 
