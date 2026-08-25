@@ -14,6 +14,7 @@ return {
         "svelte",
         "cssls",
         "html",
+        "tailwindcss",
         "lua_ls",
         "jsonls",
       },
@@ -33,6 +34,7 @@ return {
         "svelte",
         "cssls",
         "html",
+        "tailwindcss",
         "jsonls",
       }
 
