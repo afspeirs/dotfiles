@@ -7,12 +7,6 @@ map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit Neovim" })
 -- Toggle Line Wrap
 map("n", "<leader>W", function() vim.wo[0].wrap = not vim.wo[0].wrap end, { desc = "Toggle Line Wrap" })
 
--- Windows: Navigation
-map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
-
 -- Windows: Splitting
 map("n", "<leader>-", "<cmd>split<cr>", { desc = "Horizontal Split" })
 map("n", "<leader>=", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
