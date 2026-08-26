@@ -8,6 +8,7 @@ opt.termguicolors = true      -- True color support
 opt.signcolumn = "yes"        -- Always show sign column (prevents shift when LSP loads)
 vim.opt.cmdheight = 0         -- Hide the bottom command line until typing a command
 vim.opt.showmode = false      -- Hide default mode message (handled by lualine plugin)
+vim.opt.showtabline = 0       -- Never show tabline
 
 -- Tabs & Indentation
 opt.tabstop = 2
