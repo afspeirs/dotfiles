@@ -41,6 +41,23 @@ fi
 # End dotfiles loader
 ```
 
+## Tmux Agent Sidebar
+
+The `tmux` package installs [`tmux-agent-sidebar`](https://hiroppy.github.io/tmux-agent-sidebar/) through TPM, and the `opencode` package wires up the OpenCode bridge so the sidebar sees prompts, tool calls, and session status.
+
+Both packages must be stowed, and the plugin must be installed before the bridge link resolves:
+
+```bash
+stow tmux opencode
+tmux source ~/.tmux.conf
+```
+
+Then press `prefix + I` to let TPM install the plugin (its binary installer runs on first load), and restart OpenCode so it discovers the bridge.
+
+- Toggle the sidebar with `prefix + e`, or `prefix + E` for every window.
+- New worktrees are spawned with OpenCode (`n`), since `tmux/.tmux.conf` sets `@agent-sidebar-default-agent opencode`.
+- Appearance is themed to the Nord palette via `@sidebar_color_*` options in `tmux/.tmux.conf`.
+
 ## Platform-Specific Instructions
 
 ### Windows
