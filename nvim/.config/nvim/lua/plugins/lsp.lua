@@ -75,8 +75,8 @@ return {
           map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = buf, desc = "Rename symbol" })
           map("n", "<leader>cR", function() Snacks.picker.lsp_references() end, { buffer = buf, desc = "Show references" })
           map("n", "<leader>cy", function() Snacks.picker.lsp_type_definitions() end, { buffer = buf, desc = "Go to type definition" })
-          map("n", "[d", vim.diagnostic.goto_prev, { buffer = buf, desc = "Previous diagnostic" })
-          map("n", "]d", vim.diagnostic.goto_next, { buffer = buf, desc = "Next diagnostic" })
+          map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { buffer = buf, desc = "Previous diagnostic" })
+          map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { buffer = buf, desc = "Next diagnostic" })
         end,
       })
     end,
