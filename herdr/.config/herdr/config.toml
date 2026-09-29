@@ -23,4 +23,4 @@ auto_switch = false
 status_indicators = "symbols"
 
 [ui.toast]
-delivery = "terminal"
+delivery = "system"
