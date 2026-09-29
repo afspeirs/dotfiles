@@ -14,6 +14,9 @@ onboarding = false
 # Match the tmux prefix. The first entry is the primary prefix shown in the
 # status bar; the in-app help panel at `prefix+?` lists both.
 prefix = ["backtick", "§"]
+switch_tab = "prefix+1..9"
+switch_workspace = "prefix+shift+1..9"
+focus_agent = "prefix+alt+1..9"
 
 [theme]
 name = "nord"
