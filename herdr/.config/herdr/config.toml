@@ -1,0 +1,26 @@
+# Herdr — agent-aware terminal multiplexer
+# Stowed to ~/.config/herdr/config.toml
+# Docs: https://herdr.dev/docs/configuration/
+# Validate:  herdr config check
+# Reload:    herdr server reload-config
+#
+# WARNING: Herdr's Settings UI rewrites this file with an atomic rename, which
+# replaces the stow symlink with a real file and silently unlinks the package.
+# If that happens, restore the link with `dotfiles stow` (see README).
+
+onboarding = false
+
+[keys]
+# Match the tmux prefix. The first entry is the primary prefix shown in the
+# status bar; the in-app help panel at `prefix+?` lists both.
+prefix = ["backtick", "§"]
+
+[theme]
+name = "nord"
+auto_switch = false
+
+[ui]
+status_indicators = "symbols"
+
+[ui.toast]
+delivery = "terminal"

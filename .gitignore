@@ -2,3 +2,4 @@
 *.local
 *.local.*
 .stowed_packages
+/opencode/.config/opencode/plugins/herdr-*

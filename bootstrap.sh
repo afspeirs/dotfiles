@@ -191,6 +191,23 @@ if [[ " ${SELECTED_PACKAGES[*]} " =~ " tmux " ]]; then
   fi
 fi
 
+# Herdr ships as a standalone binary, not a distro package: it is absent from
+# the Fedora/Debian repos and from nixpkgs, and the AUR package is out of date.
+# The official installer detects platform/arch and drops the binary in
+# ~/.local/bin. It needs only curl and awk, both already in BASE_DEPS.
+if [[ " ${SELECTED_PACKAGES[*]} " =~ " herdr " ]]; then
+  if exists herdr; then
+    echo -e "  ✅ herdr is installed"
+  else
+    echo -e "${YELLOW}Installing Herdr...${NC}"
+    if [ "$DRY_RUN" = true ]; then
+      echo -e "  ${YELLOW}[DRY-RUN] Would run: curl -fsSL https://herdr.dev/install.sh | sh${NC}"
+    else
+      curl -fsSL https://herdr.dev/install.sh | sh
+    fi
+  fi
+fi
+
 # --- 4. Apply Stow Symlinks ---
 echo -e "\n${BLUE}==> Stowing selected packages into $HOME...${NC}"
 

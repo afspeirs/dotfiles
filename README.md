@@ -17,6 +17,7 @@ The script checks for the following dependencies:
 - `ffmpeg`
 - `ghostty`
 - `git`
+- `herdr`
 - `neovim`
 - `stow`
 - `yt-dlp`
@@ -57,6 +58,31 @@ Then press `prefix + I` to let TPM install the plugin (its binary installer runs
 - Toggle the sidebar with `prefix + e`, or `prefix + E` for every window.
 - New worktrees are spawned with OpenCode (`n`), since `tmux/.tmux.conf` sets `@agent-sidebar-default-agent opencode`.
 - Appearance is themed to the Nord palette via `@sidebar_color_*` options in `tmux/.tmux.conf`.
+
+## Herdr
+
+[Herdr](https://herdr.dev) is an agent-aware terminal multiplexer: a single Rust binary that runs in your existing terminal, keeps sessions alive across detach, and shows every coding agent's state (`working`, `blocked`, `done`) in a sidebar.
+
+The `herdr` package carries `herdr/.config/herdr/config.toml`, which sets the prefix to `` ` `` (with `§` as an alternate) to match tmux, plus the Nord theme, symbol status indicators, and terminal-delivered notifications. It is not a distro package, so `bootstrap.sh` installs it with the official script when it is missing.
+
+Both `herdr` and `opencode` must be stowed for agent state reporting to work:
+
+```bash
+stow herdr opencode
+herdr server reload-config
+```
+
+If `~/.config/herdr/config.toml` already exists as a real file, `stow` will refuse to overwrite it. Move it aside once before stowing:
+
+```bash
+mv ~/.config/herdr/config.toml ~/.config/herdr/config.toml.bak
+```
+
+- Start or reattach with `herdr`. Detach with `prefix + q`; stop the server with `herdr server stop`.
+- The prefix is `` ` ``, **not** `ctrl+b`. Press `prefix + ?` for the live keybind list.
+- Validate config changes with `herdr config check`, then apply them with `herdr server reload-config`.
+- Report agent state with `herdr integration install opencode`, and inspect integrations with `herdr integration status`. The generated bridge is gitignored and safe to reinstall.
+- **Heads up:** changing settings from inside Herdr's settings panel rewrites `config.toml` with an atomic rename, which replaces the stow symlink with a real file and silently unlinks the package. If that happens, run `dotfiles stow` to restore the link.
 
 ## Platform-Specific Instructions
 
