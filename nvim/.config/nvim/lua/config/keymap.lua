@@ -23,6 +23,8 @@ map("n", "=ap", "ma=ap'a")
 -- Clipboard yank (asbjornHaland remap)
 map({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to system clipboard" })
 map("n", "<leader>Y", [["+Y]], { desc = "Yank line to system clipboard" })
+map({ "n", "v" }, "<leader>p", [["+p]], { desc = "Paste from system clipboard" })
+map("n", "<leader>P", [["+P]], { desc = "Paste before from system clipboard" })
 
 -- Disable Q
 map("n", "Q", "<nop>")
