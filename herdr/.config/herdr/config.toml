@@ -19,6 +19,9 @@ prefix = ["backtick", "§"]
 name = "nord"
 auto_switch = false
 
+[theme.custom]
+overlay0 = "#7b88a1"
+
 [ui]
 status_indicators = "symbols"
 
