@@ -2,4 +2,10 @@
 *.local
 *.local.*
 .stowed_packages
+*.log
 /opencode/.config/opencode/plugins/herdr-*
+/herdr/.config/herdr/session-snapshots
+/herdr/.config/herdr/session.json
+/herdr/.config/herdr/herdr.sock.agent
+/herdr/.config/herdr/.plugins.lock
+/opencode/.config/opencode/plugins/gk-hooks.js
