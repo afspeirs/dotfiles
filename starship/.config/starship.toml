@@ -32,7 +32,7 @@ $character
 
 # --- Palette ---
 
-palette = "nord"
+palette = "catppuccin_mocha"
 
 [palettes.dark_modern]
 background = "#121212"
@@ -69,6 +69,24 @@ red = "#db5a58"
 orange = "#f07000"
 pink = "#d670d6"
 green = "#255abb"
+
+[palettes.catppuccin_mocha]
+background = "#1E1E2E"
+foreground = "#CDD6F4"
+theme1background = "#89B4FA"
+theme1foreground = "#1E1E2E"
+theme2background = "#89DCEB"
+theme2foreground = "#1E1E2E"
+theme3background = "#45475A"
+theme3foreground = "#CDD6F4"
+theme4background = "#313244"
+theme4foreground = "#CDD6F4"
+theme5background = "#585B70"
+theme5foreground = "#CDD6F4"
+red = "#F38BA8"
+orange = "#FAB387"
+pink = "#F5C2E7"
+green = "#A6E3A1"
 
 [palettes.nord]
 background = "#2E3440" # nord0

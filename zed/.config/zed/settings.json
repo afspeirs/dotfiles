@@ -78,6 +78,7 @@
     "path_style": "file_path_first"
   },
   "git_panel": {
+    "file_icons": true,
     "sort_by": "path",
     "group_by": "staging",
     "commit_title_max_length": 50,
@@ -178,6 +179,7 @@
     "enabled": false
   },
   "project_panel": {
+    "file_icons": true,
     "auto_fold_dirs": true,
     "bold_folder_labels": true,
     "default_width": 240.0,
@@ -218,7 +220,7 @@
     "font_size": 13,
     "line_height": "comfortable"
   },
-  "theme": "Nord Dark",
+  "theme": "Catppuccin Mocha",
   "title_bar": {
     "show_branch_status_icon": true,
     "show_menus": false,
