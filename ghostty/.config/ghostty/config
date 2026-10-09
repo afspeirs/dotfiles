@@ -20,6 +20,7 @@ macos-option-as-alt = true
 mouse-hide-while-typing = true
 theme = Catppuccin Mocha
 # theme = Nord
+title = "Ghostty"
 window-padding-x = 0
 window-padding-y = 0
 window-step-resize = true
