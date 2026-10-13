@@ -36,8 +36,8 @@ The `bootstrap.sh` script will attempt to automatically configure your shell (`.
 
 ```bash
 # Start dotfiles loader
-if [ -f "$HOME/.dotfiles_loader.sh" ]; then
-  source "$HOME/.dotfiles_loader.sh"
+if [ -f "$HOME/.dotfiles_loader.local.sh" ]; then
+  source "$HOME/.dotfiles_loader.local.sh"
 fi
 # End dotfiles loader
 ```
