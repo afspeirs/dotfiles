@@ -7,14 +7,6 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "agent": {
-    "default_model": {
-      "provider": "ollama",
-      "model": "gemma4:e2b",
-      "enable_thinking": true
-    },
-    "use_modifier_to_send": true,
-  },
   "base_keymap": "VSCode",
   "buffer_font_fallbacks": [
     "FiraCode Nerd Font"
@@ -38,7 +30,7 @@
     }
   },
   "diff_view_style": "split",
-  "disable_ai": false,
+  "disable_ai": true,
   "double_click_in_multibuffer": "open",
   "ensure_final_newline_on_save": true,
   "file_finder": {
