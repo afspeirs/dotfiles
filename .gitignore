@@ -9,3 +9,6 @@
 /herdr/.config/herdr/herdr.sock.agent
 /herdr/.config/herdr/.plugins.lock
 /opencode/.config/opencode/plugins/gk-hooks.js
+/opencode/.config/opencode/service.json
+/opencode/.config/opencode/cli.json
+/herdr/.config/herdr/release-notes.json
