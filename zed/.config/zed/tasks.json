@@ -1,15 +1,26 @@
-// Project tasks configuration. See https://zed.dev/docs/tasks for documentation.
+// Zed tasks
 //
-// Example:
+// For information, see https://zed.dev/docs/tasks
+//
 [
   {
-     "label": "lazygit",
-     "command": "lazygit",
-     "use_new_terminal": false,
-     "allow_concurrent_runs": false,
-     "reveal": "always",
-     "reveal_target": "center",
-     "hide": "always",
-     "shell": "system",
-   }
+    "label": "lazygit",
+    "command": "lazygit",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "always",
+    "shell": "system"
+  },
+  {
+    "label": "opencode",
+    "command": "opencode",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "always",
+    "shell": "system"
+  }
 ]

@@ -1,16 +1,15 @@
 // Zed keymap
 //
-// For information on binding keys, see the Zed
-// documentation: https://zed.dev/docs/key-bindings
+// For information, see the Zed documentation: https://zed.dev/docs/key-bindings
 //
-// To see the default key bindings run `zed: open default keymap`
-// from the command palette.
+// To see the default key bindings run `zed: open default keymap` from the command palette.
 [
   {
     "context": "Editor",
     "bindings": {
       "ctrl-shift-u": "editor::ConvertToUpperCase",
       "ctrl-shift-l": "editor::ConvertToLowerCase",
+      "secondary-alt-c": "workspace::CopyRelativePath"
     },
   },
   {
@@ -23,8 +22,8 @@
   {
     "context": "Terminal",
     "bindings": {
-      "cmd-enter": "workspace::ZoomIn",
-      "cmd-shift-enter": "workspace::ZoomOut",
+      "secondary-enter": "workspace::ToggleZoom",
+      "secondary-w": "pane::CloseActiveItem",
     },
   },
   {
@@ -36,14 +35,13 @@
       "secondary-alt-b": "workspace::ToggleLeftDock",
       "secondary-b": "workspace::ToggleRightDock",
       // panels
-      "ctrl-alt-a": "agent::Toggle",
-      "ctrl-alt-e": "project_panel::Toggle",
-      "ctrl-alt-g": "git_panel::Toggle",
-      "ctrl-alt-t": "terminal_panel::Toggle",
-      "ctrl-§": "terminal_panel::Toggle",
+      "secondary-alt-a": ["task::Spawn", { "task_name": "opencode" }],
+      "secondary-alt-e": "project_panel::Toggle",
+      "secondary-alt-g": "git_panel::Toggle",
+      "secondary-§": "terminal_panel::Toggle",
       // git
-      "ctrl-g ctrl-g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
-      "ctrl-g ctrl-t": "git_graph::Open",
+      "secondary-g secondary-g": ["task::Spawn", { "task_name": "lazygit" }],
+      "secondary-g secondary-t": "git_graph::Open",
     },
   },
 ]
