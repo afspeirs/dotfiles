@@ -5,8 +5,38 @@
 // To see the default key bindings run `zed: open default keymap` from the command palette.
 [
   {
+    "bindings": {
+      "shift shift": "file_finder::Toggle",
+      "f1": "command_palette::Toggle",
+      "secondary-b": "workspace::ToggleRightDock",
+      "secondary-alt-b": "workspace::ToggleLeftDock",
+      "secondary-§": "terminal_panel::Toggle",
+      "secondary-alt-e": "project_panel::Toggle",
+      "secondary-alt-g": "git_panel::Toggle",
+      "secondary-alt-l": ["task::Spawn", { "task_name": "lazygit" }],
+      "secondary-alt-t": "git_graph::Open",
+      "secondary-alt-a": ["task::Spawn", { "task_name": "opencode" }],
+    },
+  },
+  {
+    "context": "Dock",
+    "bindings": {
+      "q": "workspace::CloseActiveDock"
+    }
+  },
+  {
+    "context": "Dock || Editor",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
     "context": "Editor",
     "bindings": {
+      "secondary-enter": "workspace::ToggleZoom",
       "ctrl-shift-u": "editor::ConvertToUpperCase",
       "ctrl-shift-l": "editor::ConvertToLowerCase",
       "secondary-alt-c": "workspace::CopyRelativePath"
@@ -24,24 +54,6 @@
     "bindings": {
       "secondary-enter": "workspace::ToggleZoom",
       "secondary-w": "pane::CloseActiveItem",
-    },
-  },
-  {
-    "context": "Workspace",
-    "bindings": {
-      "shift shift": "file_finder::Toggle",
-      "f1": "command_palette::Toggle",
-      // dock
-      "secondary-alt-b": "workspace::ToggleLeftDock",
-      "secondary-b": "workspace::ToggleRightDock",
-      // panels
-      "secondary-alt-a": ["task::Spawn", { "task_name": "opencode" }],
-      "secondary-alt-e": "project_panel::Toggle",
-      "secondary-alt-g": "git_panel::Toggle",
-      "secondary-§": "terminal_panel::Toggle",
-      // git
-      "secondary-g secondary-g": ["task::Spawn", { "task_name": "lazygit" }],
-      "secondary-g secondary-t": "git_graph::Open",
     },
   },
 ]
