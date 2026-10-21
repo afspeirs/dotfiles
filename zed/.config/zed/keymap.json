@@ -56,4 +56,45 @@
       "secondary-w": "pane::CloseActiveItem",
     },
   },
+  // ---------------------------------------------------------------------------
+  // Vim
+  // ---------------------------------------------------------------------------
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-alt-v": "workspace::ToggleVimMode"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "space w": "workspace::Save",
+      "space q": "pane::CloseActiveItem",
+      "space W": "editor::ToggleSoftWrap",
+      "space -": "pane::SplitDown",
+      "space =": "pane::SplitRight",
+      "space backspace": "pane::CloseActiveItem",
+      "space y": ["vim::Yank", { "register": "+" }],
+      "space Y": ["vim::YankLine", { "register": "+" }],
+      // "space p": ["vim::PutAfter", { "register": "+" }],
+      // "space P": ["vim::PutBefore", { "register": "+" }],
+      "space /": "editor::ToggleComments",
+      "space c p": "buffer_search::Deploy",
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore" // Quick escape to Normal Mode with "jk"
+    }
+  },
+  {
+    "context": "vim_mode == visual && !menu",
+    "bindings": {
+      "space y": ["vim::Yank", { "register": "+" }],
+      // "space p": ["vim::PutAfter", { "register": "+"}],
+      "space /": "editor::ToggleComments",
+      "space s": "editor::SortLinesCaseInsensitive",
+    }
+  },
 ]
