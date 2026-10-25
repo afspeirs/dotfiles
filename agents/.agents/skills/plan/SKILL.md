@@ -29,6 +29,9 @@ Present a plan with:
 
 Keep it proportional to the size of the change: a one-line fix gets a short plan, not a formal document.
 
-## After approval
+## Approval
 
-Wait for explicit approval — it may be partial (e.g. "just steps 1–3"). Then execute the approved steps in order, stay within the approved scope, and stop to re-plan if reality diverges from the plan.
+- Plan mode persists across turns. Feedback, answers to open questions, and vague assents ("sounds good", "ok") are not approval.
+- If the user answers questions or gives feedback, update the plan as needed, re-present it, and wait again.
+- Only an explicit confirmation to proceed (e.g. "approved", "proceed", "go ahead") lifts plan mode — it may be partial (e.g. "just steps 1–3").
+- After approval, execute the approved steps in order, stay within the approved scope, and stop to re-plan if reality diverges from the plan.
