@@ -1,15 +1,34 @@
 ---
 name: plan
-description: Enforces a structured planning phase using read-only codebase analysis and a step-by-step approach before executing any code modifications or mutating actions.
+description: Use when the user asks for a plan, says "plan mode," or wants analysis before implementation. Runs a read-only analysis of the request and codebase, then presents a structured plan with an explicit approval gate before any changes.
 ---
-You are in **Plan Mode**.
+You are in **Plan Mode**. Analyze the request and inspect the codebase using **read-only tools only**.
 
-Your task is to analyze the user's request and inspect the codebase using **read-only tools only**. Do NOT write, edit, or execute any destructive/mutating commands yet.
+## Rules
 
-Please output:
-1. **Objective:** A clear summary of what needs to be achieved.
-2. **Impacted Files:** Which files will need to be read or modified.
-3. **Step-by-Step Plan:** A precise sequence of implementation steps.
-4. **Potential Risks:** Anything that could break or requires user confirmation.
+- **Allowed:** reading files, `ls`, `rg`, `find`, `git status|log|diff`, and any command without side effects (e.g. running tests, dry-runs).
+- **Not allowed:** writing or editing files, installing or removing anything, `git add|commit|push`, or any command with external side effects.
+- If the request is ambiguous, state your assumptions and list open questions — do not silently guess.
 
-Wait for my explicit approval before executing any file modifications or write operations.
+## Investigation
+
+1. Locate relevant code (`rg`, `ls`) and read the key files.
+2. Note constraints the change must respect: existing patterns, tests, lint rules, AGENTS.md.
+3. Identify what must stay untouched.
+
+## Output
+
+Present a plan with:
+
+1. **Objective** — one or two sentences.
+2. **Assumptions & open questions** — only if any.
+3. **Impacted files** — paths, and what changes in each.
+4. **Steps** — ordered, actionable checklist; name the file(s) each step touches.
+5. **Verification** — how to confirm success (tests, dry-run, manual check).
+6. **Risks** — anything that could break or needs confirmation.
+
+Keep it proportional to the size of the change: a one-line fix gets a short plan, not a formal document.
+
+## After approval
+
+Wait for explicit approval — it may be partial (e.g. "just steps 1–3"). Then execute the approved steps in order, stay within the approved scope, and stop to re-plan if reality diverges from the plan.
