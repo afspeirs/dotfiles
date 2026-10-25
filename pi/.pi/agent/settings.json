@@ -1,0 +1,10 @@
+{
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
+  "lastChangelogVersion": "1.4.0",
+  "defaultProvider": "lmstudio",
+  "defaultModel": "qwen/qwen3.5-9b",
+  "hideThinkingBlock": true,
+  "packages": [
+    "npm:pi-token-speed"
+  ]
+}
