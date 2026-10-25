@@ -19,12 +19,6 @@
     },
   },
   {
-    "context": "Dock",
-    "bindings": {
-      "q": "workspace::CloseActiveDock"
-    }
-  },
-  {
     "context": "Dock || Editor",
     "bindings": {
       "ctrl-h": "workspace::ActivatePaneLeft",
