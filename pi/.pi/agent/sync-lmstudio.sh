@@ -64,7 +64,7 @@ try:
         "$schema": "https://pi.dev/schemas/models.schema.json",
         "providers": {
             "lmstudio": {
-                "baseUrl": "http://127.0.0.1:1234/v1",
+                "baseUrl": "http://andrew-desktop:1234/v1",
                 "api": "openai-completions",
                 "apiKey": token,
                 "models": dynamic_models
