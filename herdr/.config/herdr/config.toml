@@ -17,6 +17,8 @@ prefix = ["backtick", "§"]
 switch_tab = "prefix+1..9"
 switch_workspace = "prefix+shift+1..9"
 focus_agent = "prefix+alt+1..9"
+split_vertical = "prefix+-"
+split_horizontal = "prefix+="
 
 [theme]
 name = "catppuccin"
