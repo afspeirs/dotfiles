@@ -16,6 +16,7 @@
   "buffer_line_height": "comfortable",
   "cli_default_open_behavior": "new_window",
   "collaboration_panel": {
+    "button": false,
     "dock": "left"
   },
   "colorize_brackets": true,
